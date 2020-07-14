@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={xpid:"XAQDUFdQGwAEU1dTAgME",licenseKey:"a7629a795b",applicationID:"34761523"};window.NREUM||(NREUM={}),__nr_require=function(t,n,e){function r(e){if(!n[e]){var o=n[e]={exports:{}};t[e][0].call(o.exports,function(n){var o=t[e][1][n];return r(o||n)},o,o.exports)}return n[e].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<e.length;o++)r(e[o]);return r}({1:[function(t,n,e){function r(t){try{s.console&&console.log(t)}catch(n){}}var o,i=t("ee"),a=t(21),s={};try{o=localStorage.getItem("__nr_flags").split(","),console&&"function"==typeof console.log&&(s.console=!0,o.indexOf("dev")!==-1&&(s.dev=!0),o.indexOf("nr_dev")!==-1&&(s.nrDev=!0))}catch(c){}s.nrDev&&i.on("internal-error",function(t){r(t.stack)}),s.dev&&i.on("fn-err",function(t,n,e){r(e.stack)}),s.dev&&(r("NR AGENT IN DEVELOPMENT MODE"),r("flags: "+a(s,function(t,n){return t}).join(", ")))},{}],2:[function(t,n,e){function r(t,n,e,r,s){try{p?p-=1:o(s||new UncaughtException(t,n,e),!0)}catch(f){try{i("ierr",[f,c.now(),!0])}catch(d){}}return"function"==typeof u&&u.apply(this,a(arguments))}function UncaughtException(t,n,e){this.message=t||"Uncaught error with no additional information",this.sourceURL=n,this.line=e}function o(t,n){var e=n?null:c.now();i("err",[t,e])}var i=t("handle"),a=t(22),s=t("ee"),c=t("loader"),f=t("gos"),u=window.onerror,d=!1,l="nr@seenError",p=0;c.features.err=!0,t(1),window.onerror=r;try{throw new Error}catch(h){"stack"in h&&(t(9),t(8),"addEventListener"in window&&t(5),c.xhrWrappable&&t(10),d=!0)}s.on("fn-start",function(t,n,e){d&&(p+=1)}),s.on("fn-err",function(t,n,e){d&&!e[l]&&(f(e,l,function(){return!0}),this.thrown=!0,o(e))}),s.on("fn-end",function(){d&&!this.thrown&&p>0&&(p-=1)}),s.on("internal-error",function(t){i("ierr",[t,c.now(),!0])})},{}],3:[function(t,n,e){t("loader").features.ins=!0},{}],4:[function(t,n,e){function r(t){}if(window.performance&&window.performance.timing&&window.performance.getEntriesByType){var o=t("ee"),i=t("handle"),a=t(9),s=t(8),c="learResourceTimings",f="addEventListener",u="resourcetimingbufferfull",d="bstResource",l="resource",p="-start",h="-end",m="fn"+p,w="fn"+h,v="bstTimer",g="pushState",y=t("loader");y.features.stn=!0,t(7),"addEventListener"in window&&t(5);var x=NREUM.o.EV;o.on(m,function(t,n){var e=t[0];e instanceof x&&(this.bstStart=y.now())}),o.on(w,function(t,n){var e=t[0];e instanceof x&&i("bst",[e,n,this.bstStart,y.now()])}),a.on(m,function(t,n,e){this.bstStart=y.now(),this.bstType=e}),a.on(w,function(t,n){i(v,[n,this.bstStart,y.now(),this.bstType])}),s.on(m,function(){this.bstStart=y.now()}),s.on(w,function(t,n){i(v,[n,this.bstStart,y.now(),"requestAnimationFrame"])}),o.on(g+p,function(t){this.time=y.now(),this.startPath=location.pathname+location.hash}),o.on(g+h,function(t){i("bstHist",[location.pathname+location.hash,this.startPath,this.time])}),f in window.performance&&(window.performance["c"+c]?window.performance[f](u,function(t){i(d,[window.performance.getEntriesByType(l)]),window.performance["c"+c]()},!1):window.performance[f]("webkit"+u,function(t){i(d,[window.performance.getEntriesByType(l)]),window.performance["webkitC"+c]()},!1)),document[f]("scroll",r,{passive:!0}),document[f]("keypress",r,!1),document[f]("click",r,!1)}},{}],5:[function(t,n,e){function r(t){for(var n=t;n&&!n.hasOwnProperty(u);)n=Object.getPrototypeOf(n);n&&o(n)}function o(t){s.inPlace(t,[u,d],"-",i)}function i(t,n){return t[1]}var a=t("ee").get("events"),s=t("wrap-function")(a,!0),c=t("gos"),f=XMLHttpRequest,u="addEventListener",d="removeEventListener";n.exports=a,"getPrototypeOf"in Object?(r(document),r(window),r(f.prototype)):f.prototype.hasOwnProperty(u)&&(o(window),o(f.prototype)),a.on(u+"-start",function(t,n){var e=t[1],r=c(e,"nr@wrapped",function(){function t(){if("function"==typeof e.handleEvent)return e.handleEvent.apply(e,arguments)}var n={object:t,"function":e}[typeof e];return n?s(n,"fn-",null,n.name||"anonymous"):e});this.wrapped=t[1]=r}),a.on(d+"-start",function(t){t[1]=this.wrapped||t[1]})},{}],6:[function(t,n,e){function r(t,n,e){var r=t[n];"function"==typeof r&&(t[n]=function(){var t=i(arguments),n={};o.emit(e+"before-start",[t],n);var a;n[m]&&n[m].dt&&(a=n[m].dt);var s=r.apply(this,t);return o.emit(e+"start",[t,a],s),s.then(function(t){return o.emit(e+"end",[null,t],s),t},function(t){throw o.emit(e+"end",[t],s),t})})}var o=t("ee").get("fetch"),i=t(22),a=t(21);n.exports=o;var s=window,c="fetch-",f=c+"body-",u=["arrayBuffer","blob","json","text","formData"],d=s.Request,l=s.Response,p=s.fetch,h="prototype",m="nr@context";d&&l&&p&&(a(u,function(t,n){r(d[h],n,f),r(l[h],n,f)}),r(s,"fetch",c),o.on(c+"end",function(t,n){var e=this;if(n){var r=n.headers.get("content-length");null!==r&&(e.rxSize=r),o.emit(c+"done",[null,n],e)}else o.emit(c+"done",[t],e)}))},{}],7:[function(t,n,e){var r=t("ee").get("history"),o=t("wrap-function")(r);n.exports=r;var i=window.history&&window.history.constructor&&window.history.constructor.prototype,a=window.history;i&&i.pushState&&i.replaceState&&(a=i),o.inPlace(a,["pushState","replaceState"],"-")},{}],8:[function(t,n,e){var r=t("ee").get("raf"),o=t("wrap-function")(r),i="equestAnimationFrame";n.exports=r,o.inPlace(window,["r"+i,"mozR"+i,"webkitR"+i,"msR"+i],"raf-"),r.on("raf-start",function(t){t[0]=o(t[0],"fn-")})},{}],9:[function(t,n,e){function r(t,n,e){t[0]=a(t[0],"fn-",null,e)}function o(t,n,e){this.method=e,this.timerDuration=isNaN(t[1])?0:+t[1],t[0]=a(t[0],"fn-",this,e)}var i=t("ee").get("timer"),a=t("wrap-function")(i),s="setTimeout",c="setInterval",f="clearTimeout",u="-start",d="-";n.exports=i,a.inPlace(window,[s,"setImmediate"],s+d),a.inPlace(window,[c],c+d),a.inPlace(window,[f,"clearImmediate"],f+d),i.on(c+u,r),i.on(s+u,o)},{}],10:[function(t,n,e){function r(t,n){d.inPlace(n,["onreadystatechange"],"fn-",s)}function o(){var t=this,n=u.context(t);t.readyState>3&&!n.resolved&&(n.resolved=!0,u.emit("xhr-resolved",[],t)),d.inPlace(t,g,"fn-",s)}function i(t){y.push(t),h&&(b?b.then(a):w?w(a):(E=-E,O.data=E))}function a(){for(var t=0;t<y.length;t++)r([],y[t]);y.length&&(y=[])}function s(t,n){return n}function c(t,n){for(var e in t)n[e]=t[e];return n}t(5);var f=t("ee"),u=f.get("xhr"),d=t("wrap-function")(u),l=NREUM.o,p=l.XHR,h=l.MO,m=l.PR,w=l.SI,v="readystatechange",g=["onload","onerror","onabort","onloadstart","onloadend","onprogress","ontimeout"],y=[];n.exports=u;var x=window.XMLHttpRequest=function(t){var n=new p(t);try{u.emit("new-xhr",[n],n),n.addEventListener(v,o,!1)}catch(e){try{u.emit("internal-error",[e])}catch(r){}}return n};if(c(p,x),x.prototype=p.prototype,d.inPlace(x.prototype,["open","send"],"-xhr-",s),u.on("send-xhr-start",function(t,n){r(t,n),i(n)}),u.on("open-xhr-start",r),h){var b=m&&m.resolve();if(!w&&!m){var E=1,O=document.createTextNode(E);new h(a).observe(O,{characterData:!0})}}else f.on("fn-end",function(t){t[0]&&t[0].type===v||a()})},{}],11:[function(t,n,e){function r(t){if(!i(t))return null;var n=window.NREUM;if(!n.loader_config)return null;var e=(n.loader_config.accountID||"").toString()||null,r=(n.loader_config.agentID||"").toString()||null,s=(n.loader_config.trustKey||"").toString()||null;if(!e||!r)return null;var c=a.generateCatId(),f=a.generateCatId(),u=Date.now(),d=o(c,f,u,e,r,s);return{header:d,guid:c,traceId:f,timestamp:u}}function o(t,n,e,r,o,i){var a="btoa"in window&&"function"==typeof window.btoa;if(!a)return null;var s={v:[0,1],d:{ty:"Browser",ac:r,ap:o,id:t,tr:n,ti:e}};return i&&r!==i&&(s.d.tk=i),btoa(JSON.stringify(s))}function i(t){var n=!1,e=!1,r={};if("init"in NREUM&&"distributed_tracing"in NREUM.init&&(r=NREUM.init.distributed_tracing,e=!!r.enabled),e)if(t.sameOrigin)n=!0;else if(r.allowed_origins instanceof Array)for(var o=0;o<r.allowed_origins.length;o++){var i=s(r.allowed_origins[o]);if(t.hostname===i.hostname&&t.protocol===i.protocol&&t.port===i.port){n=!0;break}}return e&&n}var a=t(19),s=t(13);n.exports={generateTracePayload:r,shouldGenerateTrace:i}},{}],12:[function(t,n,e){function r(t){var n=this.params,e=this.metrics;if(!this.ended){this.ended=!0;for(var r=0;r<l;r++)t.removeEventListener(d[r],this.listener,!1);n.aborted||(e.duration=a.now()-this.startTime,this.loadCaptureCalled||4!==t.readyState?null==n.status&&(n.status=0):i(this,t),e.cbTime=this.cbTime,u.emit("xhr-done",[t],t),s("xhr",[n,e,this.startTime]))}}function o(t,n){var e=c(n),r=t.params;r.host=e.hostname+":"+e.port,r.pathname=e.pathname,t.parsedOrigin=c(n),t.sameOrigin=t.parsedOrigin.sameOrigin}function i(t,n){t.params.status=n.status;var e=w(n,t.lastSize);if(e&&(t.metrics.rxSize=e),t.sameOrigin){var r=n.getResponseHeader("X-NewRelic-App-Data");r&&(t.params.cat=r.split(", ").pop())}t.loadCaptureCalled=!0}var a=t("loader");if(a.xhrWrappable){var s=t("handle"),c=t(13),f=t(11).generateTracePayload,u=t("ee"),d=["load","error","abort","timeout"],l=d.length,p=t("id"),h=t(17),m=t(16),w=t(14),v=window.XMLHttpRequest;a.features.xhr=!0,t(10),t(6),u.on("new-xhr",function(t){var n=this;n.totalCbs=0,n.called=0,n.cbTime=0,n.end=r,n.ended=!1,n.xhrGuids={},n.lastSize=null,n.loadCaptureCalled=!1,t.addEventListener("load",function(e){i(n,t)},!1),h&&(h>34||h<10)||window.opera||t.addEventListener("progress",function(t){n.lastSize=t.loaded},!1)}),u.on("open-xhr-start",function(t){this.params={method:t[0]},o(this,t[1]),this.metrics={}}),u.on("open-xhr-end",function(t,n){"loader_config"in NREUM&&"xpid"in NREUM.loader_config&&this.sameOrigin&&n.setRequestHeader("X-NewRelic-ID",NREUM.loader_config.xpid);var e=f(this.parsedOrigin);e&&e.header&&(n.setRequestHeader("newrelic",e.header),this.dt=e)}),u.on("send-xhr-start",function(t,n){var e=this.metrics,r=t[0],o=this;if(e&&r){var i=m(r);i&&(e.txSize=i)}this.startTime=a.now(),this.listener=function(t){try{"abort"!==t.type||o.loadCaptureCalled||(o.params.aborted=!0),("load"!==t.type||o.called===o.totalCbs&&(o.onloadCalled||"function"!=typeof n.onload))&&o.end(n)}catch(e){try{u.emit("internal-error",[e])}catch(r){}}};for(var s=0;s<l;s++)n.addEventListener(d[s],this.listener,!1)}),u.on("xhr-cb-time",function(t,n,e){this.cbTime+=t,n?this.onloadCalled=!0:this.called+=1,this.called!==this.totalCbs||!this.onloadCalled&&"function"==typeof e.onload||this.end(e)}),u.on("xhr-load-added",function(t,n){var e=""+p(t)+!!n;this.xhrGuids&&!this.xhrGuids[e]&&(this.xhrGuids[e]=!0,this.totalCbs+=1)}),u.on("xhr-load-removed",function(t,n){var e=""+p(t)+!!n;this.xhrGuids&&this.xhrGuids[e]&&(delete this.xhrGuids[e],this.totalCbs-=1)}),u.on("addEventListener-end",function(t,n){n instanceof v&&"load"===t[0]&&u.emit("xhr-load-added",[t[1],t[2]],n)}),u.on("removeEventListener-end",function(t,n){n instanceof v&&"load"===t[0]&&u.emit("xhr-load-removed",[t[1],t[2]],n)}),u.on("fn-start",function(t,n,e){n instanceof v&&("onload"===e&&(this.onload=!0),("load"===(t[0]&&t[0].type)||this.onload)&&(this.xhrCbStart=a.now()))}),u.on("fn-end",function(t,n){this.xhrCbStart&&u.emit("xhr-cb-time",[a.now()-this.xhrCbStart,this.onload,n],n)}),u.on("fetch-before-start",function(t){var n,e=t[1]||{};"string"==typeof t[0]?n=t[0]:t[0]&&t[0].url&&(n=t[0].url),n&&(this.parsedOrigin=c(n),this.sameOrigin=this.parsedOrigin.sameOrigin);var r=f(this.parsedOrigin);if(r&&r.header){var o=r.header;if("string"==typeof t[0]){var i={};for(var a in e)i[a]=e[a];i.headers=new Headers(e.headers||{}),i.headers.set("newrelic",o),this.dt=r,t.length>1?t[1]=i:t.push(i)}else t[0]&&t[0].headers&&(t[0].headers.append("newrelic",o),this.dt=r)}})}},{}],13:[function(t,n,e){var r={};n.exports=function(t){if(t in r)return r[t];var n=document.createElement("a"),e=window.location,o={};n.href=t,o.port=n.port;var i=n.href.split("://");!o.port&&i[1]&&(o.port=i[1].split("/")[0].split("@").pop().split(":")[1]),o.port&&"0"!==o.port||(o.port="https"===i[0]?"443":"80"),o.hostname=n.hostname||e.hostname,o.pathname=n.pathname,o.protocol=i[0],"/"!==o.pathname.charAt(0)&&(o.pathname="/"+o.pathname);var a=!n.protocol||":"===n.protocol||n.protocol===e.protocol,s=n.hostname===document.domain&&n.port===e.port;return o.sameOrigin=a&&(!n.hostname||s),"/"===o.pathname&&(r[t]=o),o}},{}],14:[function(t,n,e){function r(t,n){var e=t.responseType;return"json"===e&&null!==n?n:"arraybuffer"===e||"blob"===e||"json"===e?o(t.response):"text"===e||""===e||void 0===e?o(t.responseText):void 0}var o=t(16);n.exports=r},{}],15:[function(t,n,e){function r(){}function o(t,n,e){return function(){return i(t,[f.now()].concat(s(arguments)),n?null:this,e),n?void 0:this}}var i=t("handle"),a=t(21),s=t(22),c=t("ee").get("tracer"),f=t("loader"),u=NREUM;"undefined"==typeof window.newrelic&&(newrelic=u);var d=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],l="api-",p=l+"ixn-";a(d,function(t,n){u[n]=o(l+n,!0,"api")}),u.addPageAction=o(l+"addPageAction",!0),u.setCurrentRouteName=o(l+"routeName",!0),n.exports=newrelic,u.interaction=function(){return(new r).get()};var h=r.prototype={createTracer:function(t,n){var e={},r=this,o="function"==typeof n;return i(p+"tracer",[f.now(),t,e],r),function(){if(c.emit((o?"":"no-")+"fn-start",[f.now(),r,o],e),o)try{return n.apply(this,arguments)}catch(t){throw c.emit("fn-err",[arguments,this,t],e),t}finally{c.emit("fn-end",[f.now()],e)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(t,n){h[n]=o(p+n)}),newrelic.noticeError=function(t,n){"string"==typeof t&&(t=new Error(t)),i("err",[t,f.now(),!1,n])}},{}],16:[function(t,n,e){n.exports=function(t){if("string"==typeof t&&t.length)return t.length;if("object"==typeof t){if("undefined"!=typeof ArrayBuffer&&t instanceof ArrayBuffer&&t.byteLength)return t.byteLength;if("undefined"!=typeof Blob&&t instanceof Blob&&t.size)return t.size;if(!("undefined"!=typeof FormData&&t instanceof FormData))try{return JSON.stringify(t).length}catch(n){return}}}},{}],17:[function(t,n,e){var r=0,o=navigator.userAgent.match(/Firefox[\/\s](\d+\.\d+)/);o&&(r=+o[1]),n.exports=r},{}],18:[function(t,n,e){function r(t,n){var e=t.getEntries();e.forEach(function(t){"first-paint"===t.name?c("timing",["fp",Math.floor(t.startTime)]):"first-contentful-paint"===t.name&&c("timing",["fcp",Math.floor(t.startTime)])})}function o(t,n){var e=t.getEntries();e.length>0&&c("lcp",[e[e.length-1]])}function i(t){if(t instanceof u&&!l){var n,e=Math.round(t.timeStamp);n=e>1e12?Date.now()-e:f.now()-e,l=!0,c("timing",["fi",e,{type:t.type,fid:n}])}}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var a,s,c=t("handle"),f=t("loader"),u=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){a=new PerformanceObserver(r),s=new PerformanceObserver(o);try{a.observe({entryTypes:["paint"]}),s.observe({entryTypes:["largest-contentful-paint"]})}catch(d){}}if("addEventListener"in document){var l=!1,p=["click","keydown","mousedown","pointerdown","touchstart"];p.forEach(function(t){document.addEventListener(t,i,!1)})}}},{}],19:[function(t,n,e){function r(){function t(){return n?15&n[e++]:16*Math.random()|0}var n=null,e=0,r=window.crypto||window.msCrypto;r&&r.getRandomValues&&(n=r.getRandomValues(new Uint8Array(31)));for(var o,i="xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx",a="",s=0;s<i.length;s++)o=i[s],"x"===o?a+=t().toString(16):"y"===o?(o=3&t()|8,a+=o.toString(16)):a+=o;return a}function o(){function t(){return n?15&n[e++]:16*Math.random()|0}var n=null,e=0,r=window.crypto||window.msCrypto;r&&r.getRandomValues&&Uint8Array&&(n=r.getRandomValues(new Uint8Array(31)));for(var o=[],i=0;i<16;i++)o.push(t().toString(16));return o.join("")}n.exports={generateUuid:r,generateCatId:o}},{}],20:[function(t,n,e){function r(t,n){if(!o)return!1;if(t!==o)return!1;if(!n)return!0;if(!i)return!1;for(var e=i.split("."),r=n.split("."),a=0;a<r.length;a++)if(r[a]!==e[a])return!1;return!0}var o=null,i=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var s=navigator.userAgent,c=s.match(a);c&&s.indexOf("Chrome")===-1&&s.indexOf("Chromium")===-1&&(o="Safari",i=c[1])}n.exports={agent:o,version:i,match:r}},{}],21:[function(t,n,e){function r(t,n){var e=[],r="",i=0;for(r in t)o.call(t,r)&&(e[i]=n(r,t[r]),i+=1);return e}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],22:[function(t,n,e){function r(t,n,e){n||(n=0),"undefined"==typeof e&&(e=t?t.length:0);for(var r=-1,o=e-n||0,i=Array(o<0?0:o);++r<o;)i[r]=t[n+r];return i}n.exports=r},{}],23:[function(t,n,e){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(t,n,e){function r(){}function o(t){function n(t){return t&&t instanceof r?t:t?c(t,s,i):i()}function e(e,r,o,i){if(!l.aborted||i){t&&t(e,r,o);for(var a=n(o),s=m(e),c=s.length,f=0;f<c;f++)s[f].apply(a,r);var d=u[y[e]];return d&&d.push([x,e,r,a]),a}}function p(t,n){g[t]=m(t).concat(n)}function h(t,n){var e=g[t];if(e)for(var r=0;r<e.length;r++)e[r]===n&&e.splice(r,1)}function m(t){return g[t]||[]}function w(t){return d[t]=d[t]||o(e)}function v(t,n){f(t,function(t,e){n=n||"feature",y[e]=n,n in u||(u[n]=[])})}var g={},y={},x={on:p,addEventListener:p,removeEventListener:h,emit:e,get:w,listeners:m,context:n,buffer:v,abort:a,aborted:!1};return x}function i(){return new r}function a(){(u.api||u.feature)&&(l.aborted=!0,u=l.backlog={})}var s="nr@context",c=t("gos"),f=t(21),u={},d={},l=n.exports=o();l.backlog=u},{}],gos:[function(t,n,e){function r(t,n,e){if(o.call(t,n))return t[n];var r=e();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,n,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return t[n]=r,r}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(t,n,e){function r(t,n,e,r){o.buffer([t],r),o.emit(t,n,e)}var o=t("ee").get("handle");n.exports=r,r.ee=o},{}],id:[function(t,n,e){function r(t){var n=typeof t;return!t||"object"!==n&&"function"!==n?-1:t===window?0:a(t,i,function(){return o++})}var o=1,i="nr@id",a=t("gos");n.exports=r},{}],loader:[function(t,n,e){function r(){if(!E++){var t=b.info=NREUM.info,n=p.getElementsByTagName("script")[0];if(setTimeout(u.abort,3e4),!(t&&t.licenseKey&&t.applicationID&&n))return u.abort();f(y,function(n,e){t[n]||(t[n]=e)}),c("mark",["onload",a()+b.offset],null,"api");var e=p.createElement("script");e.src="https://"+t.agent,n.parentNode.insertBefore(e,n)}}function o(){"complete"===p.readyState&&i()}function i(){c("mark",["domContent",a()+b.offset],null,"api")}function a(){return O.exists&&performance.now?Math.round(performance.now()):(s=Math.max((new Date).getTime(),s))-b.offset}var s=(new Date).getTime(),c=t("handle"),f=t(21),u=t("ee"),d=t(20),l=window,p=l.document,h="addEventListener",m="attachEvent",w=l.XMLHttpRequest,v=w&&w.prototype;NREUM.o={ST:setTimeout,SI:l.setImmediate,CT:clearTimeout,XHR:w,REQ:l.Request,EV:l.Event,PR:l.Promise,MO:l.MutationObserver};var g=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1169.min.js"},x=w&&v&&v[h]&&!/CriOS/.test(navigator.userAgent),b=n.exports={offset:s,now:a,origin:g,features:{},xhrWrappable:x,userAgent:d};t(15),t(18),p[h]?(p[h]("DOMContentLoaded",i,!1),l[h]("load",r,!1)):(p[m]("onreadystatechange",o),l[m]("onload",r)),c("mark",["firstbyte",s],null,"api");var E=0,O=t(23)},{}],"wrap-function":[function(t,n,e){function r(t){return!(t&&t instanceof Function&&t.apply&&!t[a])}var o=t("ee"),i=t(22),a="nr@original",s=Object.prototype.hasOwnProperty,c=!1;n.exports=function(t,n){function e(t,n,e,o){function nrWrapper(){var r,a,s,c;try{a=this,r=i(arguments),s="function"==typeof e?e(r,a):e||{}}catch(f){l([f,"",[r,a,o],s])}u(n+"start",[r,a,o],s);try{return c=t.apply(a,r)}catch(d){throw u(n+"err",[r,a,d],s),d}finally{u(n+"end",[r,a,c],s)}}return r(t)?t:(n||(n=""),nrWrapper[a]=t,d(t,nrWrapper),nrWrapper)}function f(t,n,o,i){o||(o="");var a,s,c,f="-"===o.charAt(0);for(c=0;c<n.length;c++)s=n[c],a=t[s],r(a)||(t[s]=e(a,f?s+o:o,i,s))}function u(e,r,o){if(!c||n){var i=c;c=!0;try{t.emit(e,r,o,n)}catch(a){l([a,e,r,o])}c=i}}function d(t,n){if(Object.defineProperty&&Object.keys)try{var e=Object.keys(t);return e.forEach(function(e){Object.defineProperty(n,e,{get:function(){return t[e]},set:function(n){return t[e]=n,n}})}),n}catch(r){l([r])}for(var o in t)s.call(t,o)&&(n[o]=t[o]);return n}function l(n){try{t.emit("internal-error",n)}catch(e){}}return t||(t=o),e.inPlace=f,e.flag=a,e}},{}]},{},["loader",2,12,4,3]);</script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="_token" content="BbJTQ1M9fnA75kMnPZxOlgFjNEdCPbUh6lDEys7T"/>
+        <meta name="description" content="PureVPN offers proprietary apps for all leading platforms so you can enjoy complete internet freedom on any device you want!" />
+        <link rel="shortcut icon" href="https://www.purevpn.com/public/images/favicon_final.ico" type="image/x-icon" />
+        <title>Member Area</title>
+
+        <!-- Material Design Icons -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <!-- Bootstrap core CSS -->
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/css/font-awesome.min.css" rel="stylesheet">
+
+        <!-- Material Design Bootstrap -->
+        <link href="/sass/mdb.css" rel="stylesheet">
+         
+        <link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/css/sprite-flags-24x24.css">
+
+        
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="vendor/html5shiv/html5shiv.min.js"></script>
+        <script src="vendor/respondjs/respond.min.js"></script>
+        <![endif]-->
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
+
+        <!-- SCRIPTS -->
+
+        <!-- JQuery -->
+        <script type="text/javascript" src="/js/jquery.min.js"></script>
+
+        <!-- Bootstrap core JavaScript -->
+        <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+        <!-- Material Design Bootstrap -->
+        <script type="text/javascript" src="/js/mdb.js"></script>
+
+        <script src="/js/jquery.dataTables.min.js"></script>
+
+        <script type="text/javascript" src="/js/event.js"></script>
+
+        <script type="text/javascript" src="/js/gdpr.js"></script>
+
+        <script type="text/javascript" src="/js/config/config.js"></script>
+
+        <script type="text/javascript" src="/js/common/common.js"></script>
+
+        <script type="text/javascript" src="/js/common/constants.js"></script>
+
+        <script type="text/javascript" src="/js/app.js"></script>
+
+
+        <script type="text/javascript">
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        </script>
+
+        <style>
+            .nav-tabs a
+            {
+                height:unset;
+            }
+
+        .no-js #loader { display: none;  }
+        .js #loader { display: block; position: absolute; left: 100px; top: 0; }
+        .se-pre-con {
+                position: fixed;
+                left: 0px;
+                top: 0px;
+                width: 100%;
+                height: 100%;
+                z-index: 3000;
+                background: url(/img/loading.gif) center no-repeat rgba(51, 51, 51, 0.24);
+                display:none;
+        }
+        .error-msgs{
+            width:100%;
+        }
+        
+        .modal .alert-dismissable a{
+        float: right;
+        color: #bf2e2e;
+        font-size: 20px;
+        margin-top: -10px;
+        position: relative;
+        right: 0;
+        }
+        
+        #other-devices .dwn-list-box a{
+            text-decoration: none;
+        }
+        
+        @media  screen and (min-width: 993px) {
+            .dwn-plat-4 .dwn-plat-inr{
+                width: 25%;
+            }
+        }
+                
+        .acnt-det-modal1 table tr:nth-child(2) td{
+            border-top: 1px solid #efefef;
+        }
+        
+        
+</style>
+
+
+
+
+        <!-- start Mixpanel -->
+        <script type="text/javascript">(function(c,a){if(!a.__SV){var b=window;try{var d,m,j,k=b.location,f=k.hash;d=function(a,b){return(m=a.match(RegExp(b+"=([^&]*)")))?m[1]:null};f&&d(f,"state")&&(j=JSON.parse(decodeURIComponent(d(f,"state"))),"mpeditor"===j.action&&(b.sessionStorage.setItem("_mpcehash",f),history.replaceState(j.desiredHash||"",c.title,k.pathname+k.search)))}catch(n){}var l,h;window.mixpanel=a;a._i=[];a.init=function(b,d,g){function c(b,i){var a=i.split(".");2==a.length&&(b=b[a[0]],i=a[1]);b[i]=function(){b.push([i].concat(Array.prototype.slice.call(arguments,
+                0)))}}var e=a;"undefined"!==typeof g?e=a[g]=[]:g="mixpanel";e.people=e.people||[];e.toString=function(b){var a="mixpanel";"mixpanel"!==g&&(a+="."+g);b||(a+=" (stub)");return a};e.people.toString=function(){return e.toString(1)+".people (stub)"};l="disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(" ");
+                for(h=0;h<l.length;h++)c(e,l[h]);var f="set set_once union unset remove delete".split(" ");e.get_group=function(){function a(c){b[c]=function(){call2_args=arguments;call2=[c].concat(Array.prototype.slice.call(call2_args,0));e.push([d,call2])}}for(var b={},d=["get_group"].concat(Array.prototype.slice.call(arguments,0)),c=0;c<f.length;c++)a(f[c]);return b};a._i.push([b,d,g])};a.__SV=1.2;b=c.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?
+                MIXPANEL_CUSTOM_LIB_URL:"file:"===c.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";d=c.getElementsByTagName("script")[0];d.parentNode.insertBefore(b,d)}})(document,window.mixpanel||[]);
+            mixpanel.init("0f2e8ba3e39bda1226054ba0b84c7146");
+            mixpanel.identify(4290206);
+        </script>
+        <!-- end Mixpanel -->
+
+    </head>
+
+    <body>
+        <script type="text/javascript">
+           (function(w,d,s,l,i){ w[l]=w[l]||[];w[l].push({'gtm.start':
+           new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+           j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+           '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+           })(window,document,'script','dataLayer','GTM-PF9DKL');
+        </script>
+                <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-PF9DKL"
+                          height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <div id="loading-icon" class="se-pre-con"></div>
+
+<!--header-->
+<header class="pull-wide hasHelloBar" id="parent_gdpr_user_consent_banner">
+    
+            <!--hellobar-->
+        <section class="wt-hlobar-strip hellobar-camp clearfix" style="display: block;">
+            <div class="custom-width">
+                <div class="hellobar-text">
+                    <h2 class="helbar-hed">
+                        <a href="https://my.purevpn.com/accountupgrade"><b>We are saying Goodbye to our 5-Year Plan at 88% OFF, tonight at 11:59 PM. ></b></a>
+                    </h2>
+                </div>
+            </div>
+            <a href="javascript:void(0);" class="pull-right wt-hlobar-remove" id="hellobar-close"><span class="close"></span></a>
+        </section>
+        <!--Navigation-->
+    <nav class="navbar navbar-fixed-top z-depth-1 white" role="navigation">
+
+        <div class="container-fluid header-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand waves-effect waves-light" href="https://my.purevpn.com"></a>
+            </div>
+            <!--<div class="acc-upgrade-text" style="margin: 9px 0px;">
+                <a href="https://my.purevpn.com/accountupgrade"><p style="color: #000;text-decoration: underline;">Upgrade Today & Win FIFA World Cup Finale Ticket + $200 Amazon gift card!</p></a>
+            </div>-->
+            <div class="pull-right navbar-right-custom ">
+                <a href="https://my.purevpn.com/getstarted" class="navbar-right-link1">Get Started</a>
+                
+                
+
+
+                <div class="dropdown hdr-dd">
+                    <a href="javascript:void(0);" class="navbar-right-link3" data-toggle="dropdown">
+                        <i class="material-icons">&#xE7FD;</i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="gb_lb"></div>
+                        <div class="gb_kb"></div>
+                        <div class="hdr-dd-top">
+                            <b id="setNameTop"
+                               class="">zaelggk</b>
+                            <div class=""><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="215b49454d424261464c40484d0f424e4c">[email&#160;protected]</a></div>
+                            <a class="btn btn-default  waves-effect waves-light" href="https://my.purevpn.com/accountdetails">My
+                                Account</a>
+                        </div>
+                        <div class="hdr-dd-bot">
+                            <div>
+                                <a class="btn" id="" href="https://my.purevpn.com/logout" target="_top">Sign out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            
+        </div>
+    </nav>
+    <!--/.Navigation-->
+    <div class="clearfix"></div>
+</header>
+<div class="clearfix"></div>
+<!--header-->
+
+<main id="ser-loc">
+    <div class="container-fluid">
+
+<!--Aside-wrap-->
+<aside class="col-xs-12 sidebar-wrap">
+    <div class="sidebar-wrap-inner">
+    <ul class="sidenav">
+        <li ><a class="waves-effect" href="https://my.purevpn.com/home"><span class="icon-hm"></span>Home</a></li>
+
+                    <li ><a class="waves-effect" href="https://my.purevpn.com/billing"><span class="icon-bl"></span>Account & Billing</a></li>
+        
+        
+
+                    <li  ><a class="waves-effect" href="https://my.purevpn.com/accountupgrade"><span class="icon-upgrade"></span>Account Upgrade</a></li>
+        
+        
+        
+
+                    <li ><a class="waves-effect new-module" href="https://my.purevpn.com/addons"><span class="icon-adn"></span>Add-ons</a></li>
+            </ul>
+    <ul class="sidenav">
+        <li class="li-txt">Downloads</li>
+        <li ><a class="waves-effect " href="https://my.purevpn.com/apps"><span class="icon-app"></span>Apps</a></li>
+        <li ><a class="waves-effect" href="https://my.purevpn.com/browserextension"><span class="extensiton "></span> Extensions</a></li>
+        <li ><a class="waves-effect" href="https://my.purevpn.com/appsextension"><span class="tv-apps"></span> TV Apps</a></li>
+        <li ><a class="waves-effect" href="https://my.purevpn.com/otherdevices"><span class="icon-dvc"></span>Other Devices</a></li>
+    </ul>
+
+    <ul class="sidenav">
+                    <li  ><a class="waves-effect new-module bogo-invite" href=" https://my.purevpn.com/invite"><span class="icon-if"></span>Invite Friends</a></li>
+        
+        <li class=active><a class="waves-effect" href="https://my.purevpn.com/serverlocations"><span class="icon-srv"></span>Server Location</a></li>
+
+        
+                    <li ><a class="waves-effect" href="https://my.purevpn.com/portforwarding"><span class="icon-nf"></span>Port Forwarding</a></li>
+                <li ><a class="waves-effect" href="https://my.purevpn.com/tickets"><span class="icon-support"></span>Support Ticket</a></li>
+
+        <li ><a class="waves-effect" href="https://my.purevpn.com/affiliates"><span class="icon-aff"></span>Affiliates</a></li>
+        <li ><a class="waves-effect" href="https://my.purevpn.com/helpdesk"><span class="icon-hlp"></span>Help Desk</a></li>
+        <li>
+            <a class="waves-effect business-order business-order-link new-module" href="https://my.purevpn.com/business">
+                <span class="icon-business"></span>Business
+            </a>
+        </li>
+    </ul>
+    </div>
+</aside>
+<!--Aside-wrap-->
+
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/javascript" src="/js/pages/server.js"></script>
+
+<!--Right Column Wrap-->
+            <section class="col-xs-12 col-wide-wrap p-r-l-zero-mb">
+                <div class="pull-wide rt-glb-top">
+                    <h1>Server Location</h1>
+                    <p>PureVPN has a global network of servers, the details of which are given below.</p>
+                </div>
+
+                <div class="server-search">
+                    <input type="text" id="searchbx" placeholder="Search Your Favorite Server Location">
+                </div>
+                <!--Right Column Box-->
+                <div class="rt-glb-wrap col-xs-12">
+                    <div class="table-responsive ">
+                        <table id="glb-data-table" class="table glb-data-table" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                                <th width="160px">Country</th>
+                                <th width="160px">City</th>
+                                <th width="150px">Server Addresses</th>
+                                <th width="237px"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-af"></i> Afghanistan</td>
+                                <td>Kabul</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-af1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-af1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-af1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-af1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-af1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-af1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-al"></i> Albania</td>
+                                <td>Tirane</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'al1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">al1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'al1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">al1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'al1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">al1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-dz"></i> Algeria</td>
+                                <td>Algiers</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-dz1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-dz1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-dz1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-dz1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-dz1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-dz1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-ao"></i> Angola</td>
+                                <td>Benguela</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-ao1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-ao1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-ao1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-ao1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-ao1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-ao1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-ar"></i> Argentina</td>
+                                <td>Buenos Aires</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-ar1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-ar1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-ar1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-ar1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-ar1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-ar1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-am"></i> Armenia</td>
+                                <td>Yerevan</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vleu-am1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-am1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-am1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-am1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-am1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-am1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-aw"></i> Aruba</td>
+                                <td>Oranjestad</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'aw1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">aw1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'aw1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">aw1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'aw1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">aw1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-au"></i> Australia</td>
+                                <td>Melbourne</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'au1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">au1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'au1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">au1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'au1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">au1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-au"></i> Australia</td>
+                                <td>Perth</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'au-pe1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">au-pe1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'au-pe1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">au-pe1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'au-pe1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">au-pe1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-au"></i> Australia</td>
+                                <td>Brisbane</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'au-bn.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">au-bn.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'au-bn-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">au-bn-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'au-bn-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">au-bn-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-au"></i> Australia</td>
+                                <td>Sydney</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'au-sd-sfe.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">au-sd-sfe.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-au1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-au1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-au1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-au1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-at"></i> Austria</td>
+                                <td>Vienna</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'at1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">at1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'at1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">at1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'at1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">at1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-az"></i> Azerbaijan</td>
+                                <td>Baku</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'az1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">az1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'az1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">az1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'az1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">az1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-bs"></i> The Bahamas</td>
+                                <td>Freeport</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'bs1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">bs1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'bs1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">bs1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'bs1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">bs1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-bd"></i> Bangladesh</td>
+                                <td>Dhaka</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-bd1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-bd1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-bd1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-bd1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-bd1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-bd1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-bb"></i> Barbados</td>
+                                <td>Bridgetown</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vleu-bb.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-bb.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-bb-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-bb-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-bb-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-bb-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-be"></i> Belgium</td>
+                                <td>Brussels</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vleu-be1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-be1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-be1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-be1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-be1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-be1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-bz"></i> Belize</td>
+                                <td>San Ignacio</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'bz1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">bz1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'bz1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">bz1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'bz1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">bz1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-bm"></i> Bermuda</td>
+                                <td>Hamilton</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vleu-bm.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-bm.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-bm-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-bm-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-bm-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-bm-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-bo"></i> Bolivia</td>
+                                <td>Sucre</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vleu-bo.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-bo.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-bo-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-bo-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-bo-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-bo-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-ba"></i> Bosnia and Herzegovina</td>
+                                <td>Sarajevo</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'ba1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ba1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ba1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ba1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ba1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ba1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-br"></i> Brazil</td>
+                                <td>Sao Paulo</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'br1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">br1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'br1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">br1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'br1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">br1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-vg"></i> British Virgin Islands</td>
+                                <td>Road Town</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vg1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vg1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vg1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vg1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vg1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vg1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-bn"></i> Brunei Darussalam</td>
+                                <td>Bandar Seri Begawan</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'bn1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">bn1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'bn1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">bn1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'bn1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">bn1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-bg"></i> Bulgaria</td>
+                                <td>Sofia</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'bg1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">bg1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'bg1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">bg1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'bg1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">bg1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-kh"></i> Cambodia</td>
+                                <td>Phnom Penh</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'kh1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">kh1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'kh1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">kh1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'kh1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">kh1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-ca"></i> Canada</td>
+                                <td>Toronto</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'cato.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">cato.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'cato-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">cato-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'cato-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">cato-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-ca"></i> Canada</td>
+                                <td>Vancouver</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'cav1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">cav1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, '')" data-toggle="tooltip" data-placement="top" title="Copy"></span><hr>
+                                    <span onclick="copyToClipboard(this, '')" data-toggle="tooltip" data-placement="top" title="Copy"></span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-ca"></i> Canada</td>
+                                <td>Quebec</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'caq1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">caq1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'caq1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">caq1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'caq1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">caq1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-cv"></i> Cape Verde</td>
+                                <td>Praia</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vleu-cv.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-cv.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-cv-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-cv-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-cv-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-cv-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-ky"></i> Cayman Islands</td>
+                                <td>George Town</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vleu-ky.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-ky.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-ky-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-ky-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-ky-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-ky-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-cl"></i> Chile</td>
+                                <td>Santiago</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlbr-cl1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlbr-cl1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlbr-cl1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlbr-cl1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlbr-cl1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlbr-cl1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-co"></i> Colombia</td>
+                                <td>Bogota</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'co1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">co1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'co1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">co1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'co1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">co1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-cr"></i> Costa Rica</td>
+                                <td>San Jose</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-cr1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-cr1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-cr1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-cr1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-cr1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-cr1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-hr"></i> Croatia</td>
+                                <td>Zagreb</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-hr1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-hr1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-hr1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-hr1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-hr1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-hr1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-cu"></i> Cuba</td>
+                                <td>Havana</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'cu1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">cu1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'cu1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">cu1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'cu1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">cu1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-cy"></i> Cyprus</td>
+                                <td>Nicosia</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'cy1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">cy1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'cy1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">cy1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'cy1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">cy1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-cz"></i> Czech Republic</td>
+                                <td>Brno</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'cz1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">cz1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, '')" data-toggle="tooltip" data-placement="top" title="Copy"></span><hr>
+                                    <span onclick="copyToClipboard(this, '')" data-toggle="tooltip" data-placement="top" title="Copy"></span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-dk"></i> Denmark</td>
+                                <td>Copenhagen</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vleu-dk1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-dk1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-dk1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-dk1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-dk1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-dk1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-dm"></i> Dominica</td>
+                                <td>Roseau</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vleu-dm.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-dm.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-dm-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-dm-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-dm-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-dm-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-do"></i> Dominican Republic</td>
+                                <td>Santo Domingo</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vleu-do.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-do.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-do-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-do-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-do-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-do-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-ec"></i> Ecuador</td>
+                                <td>Quito</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'ec1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ec1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ec1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ec1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ec1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ec1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-eg"></i> Egypt</td>
+                                <td>Cairo</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-eg1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-eg1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-eg1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-eg1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-eg1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-eg1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-sv"></i> El Salvador</td>
+                                <td>San Salvador</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vleu-sv.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-sv.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-sv-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-sv-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-sv-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-sv-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-ee"></i> Estonia</td>
+                                <td>Tallinn</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'ee1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ee1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ee1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ee1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ee1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ee1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-et"></i> Ethiopia</td>
+                                <td>Addis Ababa</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'et1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">et1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'et1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">et1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'et1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">et1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-fi"></i> Finland</td>
+                                <td>Espoo</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'fi1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">fi1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, '')" data-toggle="tooltip" data-placement="top" title="Copy"></span><hr>
+                                    <span onclick="copyToClipboard(this, '')" data-toggle="tooltip" data-placement="top" title="Copy"></span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-fr"></i> France</td>
+                                <td>Paris</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'fr1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">fr1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'fr1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">fr1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'fr1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">fr1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-ge"></i> Georgia</td>
+                                <td>Tbilisi</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-ge1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-ge1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-ge1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-ge1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-ge1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-ge1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-de"></i> Germany</td>
+                                <td>Nuremberg</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'de-ao1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">de-ao1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'de-ao1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">de-ao1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'de-ao1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">de-ao1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-de"></i> Germany</td>
+                                <td>Hessen</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'de-sfe.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">de-sfe.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, '')" data-toggle="tooltip" data-placement="top" title="Copy"></span><hr>
+                                    <span onclick="copyToClipboard(this, '')" data-toggle="tooltip" data-placement="top" title="Copy"></span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-de"></i> Germany</td>
+                                <td>Munich</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'de1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">de1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'de1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">de1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'de1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">de1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-gh"></i> Ghana</td>
+                                <td>Kumasi</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'gh1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">gh1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'gh1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">gh1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'gh1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">gh1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-gr"></i> Greece</td>
+                                <td>Thessaloniki</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'gr1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">gr1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'gr1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">gr1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'gr1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">gr1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-gt"></i> Guatemala</td>
+                                <td>Guatemala</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vleu-gt.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-gt.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-gt-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-gt-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-gt-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-gt-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-gy"></i> Guyana</td>
+                                <td>Georgetown</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vleu-gy.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-gy.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-gy-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-gy-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-gy-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-gy-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-ht"></i> Haiti</td>
+                                <td>PORT-AU-PRINCE</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vls1360101.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vls1360101.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vls1360101-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vls1360101-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vls1360101-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vls1360101-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-hn"></i> Honduras</td>
+                                <td>TEGUCIGALPA</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vleu-hn.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-hn.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-hn-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-hn-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-hn-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-hn-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-hk"></i> Hong Kong (SAR)</td>
+                                <td>Hong Kong</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'hk-sfe.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">hk-sfe.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'hk1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">hk1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'hk1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">hk1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-hk"></i> Hong Kong (SAR)</td>
+                                <td>Fanling</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'hkf1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">hkf1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, '')" data-toggle="tooltip" data-placement="top" title="Copy"></span><hr>
+                                    <span onclick="copyToClipboard(this, '')" data-toggle="tooltip" data-placement="top" title="Copy"></span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-hu"></i> Hungary</td>
+                                <td>Budapest</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'hu1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">hu1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'hu1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">hu1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'hu1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">hu1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-is"></i> Iceland</td>
+                                <td>ReykjavÃƒÂk</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'is1-sstp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">is1-sstp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'is1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">is1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'is1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">is1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-in"></i> India</td>
+                                <td>New Delhi</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vleu-in1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-in1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-in1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-in1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-in1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-in1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-id"></i> Indonesia</td>
+                                <td>Jakarta</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'idn1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">idn1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, '')" data-toggle="tooltip" data-placement="top" title="Copy"></span><hr>
+                                    <span onclick="copyToClipboard(this, '')" data-toggle="tooltip" data-placement="top" title="Copy"></span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-ie"></i> Ireland</td>
+                                <td>Dublin</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'ie1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ie1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ie1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ie1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ie1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ie1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-it"></i> Italy</td>
+                                <td>Toscana</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, '')" data-toggle="tooltip" data-placement="top" title="Copy"></span><hr>
+                                    <span onclick="copyToClipboard(this, ' it-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy"> it-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, ' it-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy"> it-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-it"></i> Italy</td>
+                                <td>Porcia</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'it-po1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">it-po1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'it-po1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">it-po1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'it-po1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">it-po1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-it"></i> Italy</td>
+                                <td>Milano</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'it-sfe.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">it-sfe.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-it1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-it1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-it1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-it1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-jm"></i> Jamaica</td>
+                                <td>Kingston</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'jm1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">jm1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'jm1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">jm1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'jm1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">jm1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-jp"></i> Japan</td>
+                                <td>Tokyo</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'jp-tk1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">jp-tk1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'jp-tk1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">jp-tk1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'jp-tk1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">jp-tk1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-jo"></i> Jordan</td>
+                                <td>Amman</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-jo1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-jo1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-jo1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-jo1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-jo1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-jo1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-kz"></i> Kazakhstan</td>
+                                <td>Almaty</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-kz1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-kz1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-kz1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-kz1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-kz1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-kz1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-ke"></i> Kenya</td>
+                                <td>Mombasa</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'ke1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ke1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ke1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ke1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ke1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ke1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-kr"></i> Korea, South</td>
+                                <td>Seoul</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'kr1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">kr1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'kr1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">kr1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'kr1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">kr1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-kw"></i> Kuwait</td>
+                                <td>Kuwait</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-kw1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-kw1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-kw1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-kw1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-kw1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-kw1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-kg"></i> Kyrgyzstan</td>
+                                <td>Bishkek</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-kg1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-kg1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-kg1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-kg1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-kg1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-kg1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-la"></i> Laos</td>
+                                <td>Vientiane</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-la1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-la1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-la1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-la1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-la1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-la1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-lv"></i> Latvia</td>
+                                <td>RIGA</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'lv1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">lv1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'lv1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">lv1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'lv1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">lv1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-lb"></i> Lebanon</td>
+                                <td>Tripoli</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'lb1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">lb1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'lb1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">lb1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'lb1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">lb1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-li"></i> Liechtenstein</td>
+                                <td>Vaduz</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'li1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">li1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'li1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">li1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'li1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">li1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-lt"></i> Lithuania</td>
+                                <td>Vilnius</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'lt1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">lt1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'lt1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">lt1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'lt1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">lt1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-lu"></i> Luxembourg</td>
+                                <td>Luxembourg</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'lu1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">lu1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'lu1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">lu1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'lu1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">lu1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-mo"></i> Macao</td>
+                                <td>Beyrouth</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'mo1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">mo1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'mo1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">mo1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'mo1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">mo1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-mg"></i> Madagascar</td>
+                                <td>Antananarivo</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-mg1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-mg1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-mg1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-mg1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-mg1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-mg1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-my"></i> Malaysia</td>
+                                <td>Kuala Lumpur</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'my-kl1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">my-kl1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'my-kl1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">my-kl1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'my-kl1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">my-kl1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-my"></i> Malaysia</td>
+                                <td>Johor Baharu</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'my1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">my1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, '')" data-toggle="tooltip" data-placement="top" title="Copy"></span><hr>
+                                    <span onclick="copyToClipboard(this, '')" data-toggle="tooltip" data-placement="top" title="Copy"></span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-mt"></i> Malta</td>
+                                <td>Sliema</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'mt1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">mt1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'mt1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">mt1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'mt1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">mt1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-mr"></i> Mauritania</td>
+                                <td>Nouakchott</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-mr1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-mr1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-mr1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-mr1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-mr1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-mr1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-mu"></i> Mauritius</td>
+                                <td>Port Louis</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'mu1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">mu1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'mu1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">mu1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'mu1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">mu1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-mx"></i> Mexico</td>
+                                <td>Mexico</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-mx1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-mx1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-mx1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-mx1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-mx1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-mx1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-md"></i> Moldova</td>
+                                <td>Chisinau</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'md1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">md1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'md1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">md1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'md1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">md1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-mc"></i> Monaco</td>
+                                <td>Monaco</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'mn1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">mn1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'mn1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">mn1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'mn1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">mn1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-mn"></i> Mongolia</td>
+                                <td>Ulaanbaatar</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-mn1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-mn1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-mn1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-mn1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-mn1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-mn1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-ms"></i> Montserrat</td>
+                                <td>plymouth</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vleu-ms.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-ms.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-ms-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-ms-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-ms-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-ms-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-ma"></i> Morocco</td>
+                                <td>Rabat</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'ma1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ma1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ma1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ma1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ma1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ma1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-nl"></i> Netherlands</td>
+                                <td>Amsterdam</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'nl1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">nl1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'nl1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">nl1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'nl1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">nl1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-nz"></i> New Zealand</td>
+                                <td>Wellington</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-nz1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-nz1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-nz1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-nz1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-nz1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-nz1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-ni"></i> Nicaragua</td>
+                                <td>Managua</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vleu-ni.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-ni.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-ni-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-ni-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-ni-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-ni-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-ne"></i> Niger</td>
+                                <td>Niamey</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-ne1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-ne1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-ne1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-ne1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-ne1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-ne1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-ng"></i> Nigeria</td>
+                                <td>Suleja</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'ng1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ng1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ng1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ng1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ng1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ng1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-no"></i> Norway</td>
+                                <td>Oslo</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vleu-no1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-no1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-no1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-no1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-no1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-no1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-om"></i> Oman</td>
+                                <td>Salalah</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'om1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">om1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'om1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">om1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'om1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">om1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-pk"></i> Pakistan</td>
+                                <td>Islamabad</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'pk1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">pk1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'pk1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">pk1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'pk1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">pk1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-pa"></i> Panama</td>
+                                <td>Panama City</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-pa1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-pa1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-pa1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-pa1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-pa1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-pa1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-pg"></i> Papua New Guinea</td>
+                                <td>Port Moresby</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-pg1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-pg1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-pg1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-pg1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-pg1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-pg1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-py"></i> Paraguay</td>
+                                <td>Asuncion</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vleu-py.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-py.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-py-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-py-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-py-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-py-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-pe"></i> Peru</td>
+                                <td>Lima</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'pe1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">pe1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'pe1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">pe1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'pe1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">pe1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-ph"></i> Philippines</td>
+                                <td>Manila</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlap-ph1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlap-ph1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlap-ph1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlap-ph1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlap-ph1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlap-ph1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-pl"></i> Poland</td>
+                                <td>Warsaw</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'pl1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">pl1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'pl1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">pl1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'pl1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">pl1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-pt"></i> Portugal</td>
+                                <td>Lisbon</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'pt1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">pt1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'pt1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">pt1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'pt1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">pt1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-pr"></i> Puerto Rico</td>
+                                <td>San Juan</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'pr1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">pr1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'pr1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">pr1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'pr1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">pr1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-qa"></i> Qatar</td>
+                                <td>Doha</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'qa1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">qa1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'qa1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">qa1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'qa1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">qa1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-ro"></i> Romania</td>
+                                <td>Bucharest</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'ro1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ro1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ro1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ro1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ro1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ro1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-ru"></i> Russia</td>
+                                <td>Moscow</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'ru1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ru1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-ru1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-ru1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-ru1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-ru1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-lc"></i> Saint Lucia</td>
+                                <td>Castries</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vleu-lc.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-lc.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-lc-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-lc-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-lc-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-lc-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-sa"></i> Saudi Arabia</td>
+                                <td>Jeddah</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'sa1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">sa1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'sa1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">sa1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'sa1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">sa1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-sn"></i> Senegal</td>
+                                <td>Dakar</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-sn1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-sn1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-sn1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-sn1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-sn1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-sn1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-sc"></i> Seychelles</td>
+                                <td>Victoria</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'sc1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">sc1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'sc1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">sc1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'sc1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">sc1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-sg"></i> Singapore</td>
+                                <td>Singapore</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'sg-sfe.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">sg-sfe.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'sg1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">sg1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'sg1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">sg1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-sk"></i> Slovakia</td>
+                                <td>Bratislava</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'sk1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">sk1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'sk1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">sk1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'sk1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">sk1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-si"></i> Slovenia</td>
+                                <td>Ljubljana</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'si1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">si1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'si1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">si1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'si1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">si1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-za"></i> South Africa</td>
+                                <td>Benoni</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'za1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">za1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'za1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">za1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'za1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">za1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-es"></i> Spain</td>
+                                <td>Madrid</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'es1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">es1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'es1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">es1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'es1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">es1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-es"></i> Spain</td>
+                                <td>Barcelona</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'es-sfe.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">es-sfe.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, '')" data-toggle="tooltip" data-placement="top" title="Copy"></span><hr>
+                                    <span onclick="copyToClipboard(this, '')" data-toggle="tooltip" data-placement="top" title="Copy"></span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-lk"></i> Sri Lanka</td>
+                                <td>Colombo</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-lk1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-lk1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-lk1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-lk1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-lk1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-lk1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-sr"></i> Suriname</td>
+                                <td>Paramaribo</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vleu-sr.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-sr.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-sr-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-sr-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-sr-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-sr-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-se"></i> Sweden</td>
+                                <td>Stockholm</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'se1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">se1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-se1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-se1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'se1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">se1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-ch"></i> Switzerland</td>
+                                <td>Zurich</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'ch1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ch1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ch1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ch1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ch1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ch1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-tw"></i> Taiwan</td>
+                                <td>Taoyuan</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'tw1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">tw1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'tw1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">tw1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'tw1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">tw1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-tw"></i> Taiwan</td>
+                                <td>Taipei</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlap-tw1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlap-tw1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlap-tw1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlap-tw1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlap-tw1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlap-tw1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-tj"></i> Tajikistan</td>
+                                <td>Dushanbe</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-tj1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-tj1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-tj-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-tj-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-tj-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-tj-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-tz"></i> Tanzania</td>
+                                <td>Dar Es Salaam</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-tz1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-tz1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-tz1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-tz1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-tz1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-tz1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-th"></i> Thailand</td>
+                                <td>Bangkok</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlap-th1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlap-th1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlap-th1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlap-th1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlap-th1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlap-th1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-tt"></i> Trinidad and Tobago</td>
+                                <td>Port of Spain</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vleu-tt.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-tt.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-tt-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-tt-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-tt-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-tt-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-tn"></i> Tunisia</td>
+                                <td>Tunis</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-tn1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-tn1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-tn1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-tn1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-tn1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-tn1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-tr"></i> Turkey</td>
+                                <td>Istanbul</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'tr1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">tr1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-tr1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-tr1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-tr1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-tr1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-tm"></i> Turkmenistan</td>
+                                <td>Ashgabat</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-tm1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-tm1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-tm1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-tm1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-tm1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-tm1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-tc"></i> Turks and Caicos Islands</td>
+                                <td>Balfour Town</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vleu-tc.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-tc.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-tc-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-tc-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-tc-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-tc-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-ua"></i> Ukraine</td>
+                                <td>Odessa</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'ua1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ua1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ua1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ua1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ua1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ua1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-ae"></i> United Arab Emirates</td>
+                                <td>Dubai</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'ae1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ae1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ae1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ae1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ae1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ae1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-gb"></i> United Kingdom</td>
+                                <td>London</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'ukl-sstp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ukl-sstp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ukl1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ukl1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ukl1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ukl1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-gb"></i> United Kingdom</td>
+                                <td>Gosport</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'ukg1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ukg1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ukg1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ukg1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ukg1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ukg1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-gb"></i> United Kingdom</td>
+                                <td>Maidenhead</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'ukm-sfe.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ukm-sfe.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ukm1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ukm1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ukm1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ukm1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-gb"></i> United Kingdom</td>
+                                <td>Manchester</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-uk-man1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-uk-man1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-uk-man1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-uk-man1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-uk-man1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-uk-man1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-gb"></i> United Kingdom</td>
+                                <td>Leicester</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlap-ukle1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlap-ukle1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlap-ukle1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlap-ukle1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlap-ukle1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlap-ukle1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-us"></i> United States</td>
+                                <td>Miami</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'usfl1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">usfl1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'usfl1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">usfl1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'usfl1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">usfl1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-us"></i> United States</td>
+                                <td>Seattle</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'ussa.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ussa.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, ' ussa-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy"> ussa-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ussa-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ussa-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-us"></i> United States</td>
+                                <td>Houston</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'sstp-tx.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">sstp-tx.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ustx1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ustx1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, '')" data-toggle="tooltip" data-placement="top" title="Copy"></span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-us"></i> United States</td>
+                                <td>Georgia</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'usga-sfe.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">usga-sfe.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'usga1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">usga1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'usga1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">usga1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-us"></i> United States</td>
+                                <td>New Jersey</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'usnj1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">usnj1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'usnj-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">usnj-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'usnj1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">usnj1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-us"></i> United States</td>
+                                <td>Washington</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'sstp-wdc.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">sstp-wdc.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'uswdc1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">uswdc1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'uswdc1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">uswdc1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-us"></i> United States</td>
+                                <td>Chicago</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'usil-sfe.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">usil-sfe.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'usil1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">usil1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'usil1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">usil1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-us"></i> United States</td>
+                                <td>Phoenix</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'usphx1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">usphx1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'usphx1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">usphx1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'usphx1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">usphx1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-us"></i> United States</td>
+                                <td>Los Angeles</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'usla1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">usla1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'usla1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">usla1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'usla1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">usla1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-us"></i> United States</td>
+                                <td>Virginia</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlbr-usvc1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlbr-usvc1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlbr-usvc1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlbr-usvc1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlbr-usvc1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlbr-usvc1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-us"></i> United States</td>
+                                <td>San Francisco</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'ussf.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ussf.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlsa-ussf1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlsa-ussf1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlsa-ussf1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlsa-ussf1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-us"></i> United States</td>
+                                <td>New York</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'usny-sfe.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">usny-sfe.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'usny1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">usny1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'usny1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">usny1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-us"></i> United States</td>
+                                <td>Ohio</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vleu-usoh1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-usoh1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-usoh1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-usoh1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-usoh1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-usoh1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-uz"></i> Uzbekistan</td>
+                                <td>Tashkent</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-uz1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-uz1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-uz-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-uz-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-uz-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-uz-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-ve"></i> Venezuela</td>
+                                <td>Caracas</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 've1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ve1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 've1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ve1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 've1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ve1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-vn"></i> Vietnam</td>
+                                <td>Hanoi</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlap-vn1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlap-vn1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlap-vn1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlap-vn1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlap-vn1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlap-vn1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-ye"></i> Yemen</td>
+                                <td>Aden</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'ym1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ym1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ym1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ym1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'ym1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">ym1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-rs"></i> Serbia</td>
+                                <td>Belgrade</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'rs1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">rs1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'rs1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">rs1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'rs1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">rs1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-me"></i> Montenegro</td>
+                                <td>Podgorica</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'me1-sstp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">me1-sstp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-me1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-me1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vleu-me1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vleu-me1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-im"></i> Isle of Man</td>
+                                <td>Onchan</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'im1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">im1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'im1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">im1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'im1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">im1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                                                        <tr>
+                                <td><i class="flag flag-24 flag-mm"></i> Myanmar</td>
+                                <td>Rangoon</td>
+                                <td>PPTP, L2TP, SSTP, IKEv2:<hr> OpenVPN-TCP:<hr> OpenVPN-UDP:</td>
+                                <td><span onclick="copyToClipboard(this, 'vlus-mm1.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-mm1.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-mm1-ovpn-tcp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-mm1-ovpn-tcp.pointtoserver.com</span><hr>
+                                    <span onclick="copyToClipboard(this, 'vlus-mm1-ovpn-udp.pointtoserver.com')" data-toggle="tooltip" data-placement="top" title="Copy">vlus-mm1-ovpn-udp.pointtoserver.com</span></td>
+                            </tr>
+                             
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <!--Right Column Box-->
+
+            </section>
+            <!--Right Column Wrap-->
+
+
+
+    </div>
+</main>
+
+<div class="clearfix"></div>
+
+    <!--Footer-->
+    <footer>
+        <div class="col-xs-12 p-r-l-zero-mb footer-wrap">
+            <div class="col-sm-6 col-sm-12">@ 2007 - 2020 PureVPN All Rights Reserved</div>
+            <div class="col-sm-6 col-sm-12">Company Registration No: 1544568</div>
+        </div>
+        <div class="clearfix"></div>
+    </footer>
+    <!--Footer-->
+
+            <!-- Start of LiveChat (www.livechatinc.com) code -->
+        <script type="text/javascript">
+            var __lc = {};
+            __lc.license = 4454601;
+            __lc.ga_version = "ga";
+
+            __lc.params = [
+                { name: 'IP', value: '45.76.164.90' },
+                { name: 'Location', value: 'US' },
+
+                { name: 'Device', value: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36'},
+                { name: 'URL', value: window.location.href },
+                { name: 'Existing', value: '0' }
+            ];
+
+            (function()
+            {
+                var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
+                lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.livechatinc.com/tracking.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
+            })();
+        </script>
+        <!-- End of LiveChat code -->
+    
+                
+            <script>
+            var user_email_id = 'zhdlcc@gmail.com';
+        </script>
+            <script id="profitwell-js" data-pw-auth="7aa81caa922280ff21f163c3599d7a4f">
+            (function(i,s,o,g,r,a,m){i[o]=i[o]||function(){(i[o].q=i[o].q||[]).push(arguments)};
+                a=s.createElement(g);m=s.getElementsByTagName(g)[0];a.async=1;a.src=r+'?auth='+
+                    s.getElementById(o+'-js').getAttribute('data-pw-auth');m.parentNode.insertBefore(a,m);
+            })(window,document,'profitwell','script','https://public.profitwell.com/js/profitwell.js');
+
+                            profitwell('start', { 'user_email': user_email_id });
+                    </script>
+    <script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"a7629a795b","applicationID":"34761523","transactionName":"b1wGZ0dXWkFRVBAIV1YWJVBBX1tcH3YUEWRwTRBDaXVbXERFCw1UXUsXb2ZTRkRVRTgyXUpPAUF2WVpGQlgIDV1KeRdWR0BRQFxYBwBMUVYKQA==","queueTime":0,"applicationTime":90,"atts":"QxsFEQ9NSU8=","errorBeacon":"bam.nr-data.net","agent":""}</script><script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"rayId":"5b102a765bfdccc6","version":"2020.6.0","si":10}'></script>
+</body>
+</html>
