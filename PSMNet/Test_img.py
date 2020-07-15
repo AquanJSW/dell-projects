@@ -88,7 +88,7 @@ def main():
     imgL = infer_transform(imgL_o)
     imgR = infer_transform(imgR_o)
 
-    # pad to width and hight to 16 times
+    # pad to width and height to 16 times
     if imgL.shape[1] % 16 != 0:
         times = imgL.shape[1]//16
         top_pad = (times+1)*16 -imgL.shape[1]
@@ -101,8 +101,8 @@ def main():
     else:
         right_pad = 0
 
-    imgL = F.pad(imgL,(0,right_pad, top_pad,0)).unsqueeze(0)
-    imgR = F.pad(imgR,(0,right_pad, top_pad,0)).unsqueeze(0)
+    imgL = F.pad(imgL, (0, right_pad, top_pad, 0)).unsqueeze(0)
+    imgR = F.pad(imgR, (0, right_pad, top_pad, 0)).unsqueeze(0)
 
     start_time = time.time()
     pred_disp = test(imgL,imgR)

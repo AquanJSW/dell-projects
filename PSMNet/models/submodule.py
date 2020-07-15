@@ -20,14 +20,14 @@ def convbn_3d(in_planes, out_planes, kernel_size, stride, pad):
     return nn.Sequential(nn.Conv3d(in_planes, out_planes, kernel_size=kernel_size, padding=pad, stride=stride, bias=False),
                          nn.BatchNorm3d(out_planes))
 
+
 class BasicBlock(nn.Module):
     expansion = 1
+
     def __init__(self, inplanes, planes, stride, downsample, pad, dilation):
         super(BasicBlock, self).__init__()
-
         self.conv1 = nn.Sequential(convbn(inplanes, planes, 3, stride, pad, dilation),
                                    nn.ReLU(inplace=True))
-
         self.conv2 = convbn(planes, planes, 3, 1, pad, dilation)
 
         self.downsample = downsample
@@ -65,18 +65,20 @@ class disparityregression(nn.Module):
         out = torch.sum(x*disp,1)
         return out
 
+
 class feature_extraction(nn.Module):
     def __init__(self):
         super(feature_extraction, self).__init__()
         self.inplanes = 32
+        # conv0 in paper
         self.firstconv = nn.Sequential(convbn(3, 32, 3, 2, 1, 1),
-                                       nn.ReLU(inplace=True),
+                                       nn.ReLU(inplace=True),   # inplace save memory
                                        convbn(32, 32, 3, 1, 1, 1),
                                        nn.ReLU(inplace=True),
                                        convbn(32, 32, 3, 1, 1, 1),
                                        nn.ReLU(inplace=True))
 
-        self.layer1 = self._make_layer(BasicBlock, 32, 3, 1,1,1)
+        self.layer1 = self._make_layer(BasicBlock, 32, 3, 1, 1, 1)
         self.layer2 = self._make_layer(BasicBlock, 64, 16, 2,1,1) 
         self.layer3 = self._make_layer(BasicBlock, 128, 3, 1,1,1)
         self.layer4 = self._make_layer(BasicBlock, 128, 3, 1,1,2)
@@ -118,10 +120,10 @@ class feature_extraction(nn.Module):
         return nn.Sequential(*layers)
 
     def forward(self, x):
-        output      = self.firstconv(x)
-        output      = self.layer1(output)
-        output_raw  = self.layer2(output)
-        output      = self.layer3(output_raw)
+        output = self.firstconv(x)
+        output = self.layer1(output)
+        output_raw = self.layer2(output)
+        output = self.layer3(output_raw)
         output_skip = self.layer4(output)
 
 
