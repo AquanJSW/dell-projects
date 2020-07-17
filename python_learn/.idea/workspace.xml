@@ -2,28 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ff7befb-ae49-48c0-a522-64a50e08df2d" name="默认的" comment="">
-      <change afterPath="$PROJECT_DIR$/../PSMNet/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../spyder/.idea/spyder.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PSMNet/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PSMNet/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PSMNet/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PSMNet/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PSMNet/Test_img.py" beforeDir="false" afterPath="$PROJECT_DIR$/../PSMNet/Test_img.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PSMNet/models/submodule.py" beforeDir="false" afterPath="$PROJECT_DIR$/../PSMNet/models/submodule.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/cnn.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/learn_python_gpu_accelerate.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/other.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/remote-mappings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/collections_learn.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gpu_accelarate_numba.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gpu_accelarate_pytorch.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn.py.baiduyun.uploading.cfg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn_opencv.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/torch_learn.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/torch_net.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shell/note-pull.ps1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shell/note-push.ps1" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../tex_learn/first.aux" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../tex_learn/first.log" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../tex_learn/first.pdf" beforeDir="false" />
@@ -230,6 +210,7 @@
       <workItem from="1594599810779" duration="599000" />
       <workItem from="1594728659273" duration="4470000" />
       <workItem from="1594788677239" duration="960000" />
+      <workItem from="1594971925431" duration="154000" />
     </task>
     <servers />
   </component>

@@ -1,8 +1,6 @@
 """
 Gaussian Blur using opencv and gpu accelerate
 Note: Split Gaussian Kernel is used
-!!! 用pytorch实现简单地一次卷积，结果可能并非正常!!!
-        用简单地卷积验证一下
 """
 
 import torch
@@ -10,9 +8,19 @@ import torch.nn as nn
 import torch.nn.functional as F
 import cv2
 import matplotlib.pyplot as plt
+import argparse
 
-device = torch.device("cuda")
-path1 = 'd:\\Dataset\\msl\\left_nav_pair\\10286.jpg'
+path = './549.jpg'
+
+parser = argparse.ArgumentParser(description='Split Gaussian Blur')
+parser.add_argument('-p', '--path', default=path, type=str, help="image's path")
+parser.add_argument('-k', '--kernel_size', default=3, type=int, help="kernel size, must be an odd")
+parser.add_argument('-s', '--sigma', default=1.0, type=float, help="value of sigma")
+parser.add_argument('-nc', '--no_cuda', default=False, action='store_const', const=True,
+                    help="no CUDA once specified")
+parse = parser.parse_args()
+
+device = torch.device('cuda' if (not parse.no_cuda) and torch.cuda.is_available() else 'cpu')
 
 
 # 用于高斯模糊
@@ -37,8 +45,7 @@ class GaussianBlurNet(nn.Module):
         return img
 
 
-def gaussian_blur(img="/home/tjh/dataset/msl/left_nav_pair/10268.jpg",
-         kernel_size=7, sigma=18):
+def main(img=parse.path, kernel_size=parse.kernel_size, sigma=parse.sigma):
     # 核心非奇数返回Error
     if not (kernel_size % 2):
         raise ValueError("kernel size must be odd")
@@ -54,5 +61,5 @@ def gaussian_blur(img="/home/tjh/dataset/msl/left_nav_pair/10268.jpg",
 
 
 if __name__ == '__main__':
-    gaussian_blur()
+    main()
 
