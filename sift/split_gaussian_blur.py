@@ -45,21 +45,23 @@ class GaussianBlurNet(nn.Module):
         return img
 
 
-def main(img=parse.path, kernel_size=parse.kernel_size, sigma=parse.sigma):
-    # 核心非奇数返回Error
-    if not (kernel_size % 2):
-        raise ValueError("kernel size must be odd")
+class GaussianBlur:
+    def __init__(self, path=parse.path, kernel_size=parse.kernel_size, sigma=parse.sigma):
+        # 核心非奇数返回Error
+        if not (kernel_size % 2):
+            raise ValueError("kernel size must be and odd")
+        self.kernel_size = kernel_size
+        self.sigma = sigma
+        self.img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
+        self.kernel = cv2.getGaussianKernel(kernel_size, sigma)
+        net = GaussianBlurNet(self.kernel)
+        self.out = net(self.img)
 
-    img = cv2.imread(img, cv2.IMREAD_GRAYSCALE)                      # 读取并转换为灰度图
-    plt.subplot(121), plt.imshow(img, 'gray'), plt.title('origin')   # 绘制处理前的图像
-    kernel = cv2.getGaussianKernel(kernel_size, sigma)               # 得到一维Gaussian核，ndarray type
-    net = GaussianBlurNet(kernel)
-    img = net(img)                                                   # 返回Gaussian模糊后的图像
-    plt.subplot(122), plt.imshow(img, 'gray'),\
-        plt.title('kernel: %d, sigma: %.1f' % (kernel_size, sigma))  # 绘制处理后的图像
-    plt.show()
+    def show(self):
+        plt.subplot(121), plt.imshow(self.img, 'gray'), plt.title('origin')
+        plt.subplot(122), plt.imshow(self.out, 'gray')
+        plt.title('kernel: %d   sigma: %.1f' % (self.kernel_size, self.sigma))
+        plt.show()
 
-
-if __name__ == '__main__':
-    main()
-
+    def output(self):
+        return self.out
