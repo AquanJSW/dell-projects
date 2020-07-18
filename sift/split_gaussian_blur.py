@@ -1,5 +1,5 @@
 """
-Gaussian Blur using opencv and gpu accelerate
+Gaussian Blur using openCV and gpu acceleration
 Note: Split Gaussian Kernel is used
 """
 
@@ -24,28 +24,33 @@ device = torch.device('cuda' if (not parse.no_cuda) and torch.cuda.is_available(
 
 
 # 用于高斯模糊
-class GaussianBlurNet(nn.Module):
+class _GaussianBlurNet(nn.Module):
+    """Do not use this class
+    """
     def __init__(self, kernel):
-        super(GaussianBlurNet, self).__init__()
+        super(_GaussianBlurNet, self).__init__()
         self.train(False)
         # 两个一维卷积核
         # 可以不使用nn.Parameter，因为该方法将v/hkernel转化为可训练的参数，但这里根本不用训练
         vkernel = torch.from_numpy(kernel).to(device=device, dtype=torch.float16)
         hkernel = vkernel.T
-        self.vkernel = vkernel.unsqueeze(0).unsqueeze(0)
-        self.hkernel = hkernel.unsqueeze(0).unsqueeze(0)
-        self.padding = len(kernel) // 2
+        self._vkernel = vkernel.unsqueeze(0).unsqueeze(0)
+        self._hkernel = hkernel.unsqueeze(0).unsqueeze(0)
+        self._padding = len(kernel) // 2
 
+    # 两次卷积实现分离高斯模糊
     def forward(self, img):
         img = torch.from_numpy(img).to(device=device, dtype=torch.float16)
         img = img.unsqueeze(0).unsqueeze(0)
-        img = F.conv2d(img, weight=self.vkernel, padding=(0, self.padding))
-        img = F.conv2d(img, weight=self.hkernel, padding=(self.padding, 0))
+        img = F.conv2d(img, weight=self._vkernel, padding=(0, self._padding))
+        img = F.conv2d(img, weight=self._hkernel, padding=(self._padding, 0))
         img = img.squeeze().to(device='cpu', dtype=torch.uint8).numpy()
         return img
 
 
 class GaussianBlur:
+    """Use this class
+    """
     def __init__(self, path=parse.path, kernel_size=parse.kernel_size, sigma=parse.sigma):
         # 核心非奇数返回Error
         if not (kernel_size % 2):
@@ -54,14 +59,18 @@ class GaussianBlur:
         self.sigma = sigma
         self.img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
         self.kernel = cv2.getGaussianKernel(kernel_size, sigma)
-        net = GaussianBlurNet(self.kernel)
+        net = _GaussianBlurNet(self.kernel)
         self.out = net(self.img)
 
     def show(self):
+        """Show origin and output image
+        """
         plt.subplot(121), plt.imshow(self.img, 'gray'), plt.title('origin')
         plt.subplot(122), plt.imshow(self.out, 'gray')
         plt.title('kernel: %d   sigma: %.1f' % (self.kernel_size, self.sigma))
         plt.show()
 
     def output(self):
+        """Return numpy format output image
+        """
         return self.out
