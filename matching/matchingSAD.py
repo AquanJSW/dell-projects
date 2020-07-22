@@ -23,6 +23,7 @@ TODO:
     various penalties
 """
 
+from gaussian_blur import GaussianBlur as Blur
 import argparse
 import cv2
 import numpy as np
@@ -41,7 +42,7 @@ parser.add_argument('-s', '--shift', default=1, type=int, help="max vertical shi
 parser.add_argument('-b', '--block_size', type=int, default=5, help='block size')
 parser.add_argument('-t', '--threshold', default=1, type=int,
                     help="[0-255], the lower, the weaker limit")
-parser.add_argument('-D', '--device', default='cpu', type=str, help="'cpu' or 'gpu'")
+parser.add_argument('-D', '--device', default='cpu', type=str, help="'cpu' or 'cuda'")
 parser.add_argument('-p', '--enable_parallel', default=False, type=bool,
                     help="parallel compute, True or False")
 parser.add_argument('-S', '--enable_save', default=False, action='store_true',
@@ -70,11 +71,12 @@ class MatchingSAD:
         :param shift: max vertical pixel shift (one side)
         :param block_size: block size
         :param threshold: [0-255], the lower, the weaker limit
-        :param device: 'cpu' or 'gpu'
+        :param device: 'cpu' or 'cuda'
         :param enable_parallel: enable parallel computing, valid for cpu and gpu
         :param enable_save: saving the output as image file
         :param save_path: saving path
-        :param resize: resize the image as given ratio before processing
+        :param resize: resize the image as given ratio before processing, WARNING: all the other
+            parameters should be specified w.r.t the resized image
         :param blur: blur the image pair before processing.
             Actually, the value is SIGMA in Gaussian Blur. The bigger, the fuzzier
         :type left: str or numpy
@@ -108,38 +110,55 @@ class MatchingSAD:
             if not (os.path.exists(self.left) and os.path.exists(self.right)):
                 raise ValueError("image's path is not valid")
             self.name = shell('./get_name.sh', self.left)
-            self.left_img = cv2.imread(self.left, cv2.IMREAD_GRAYSCALE)
-            self.right_img = cv2.imread(self.right, cv2.IMREAD_GRAYSCALE)
+            self.left_img_pre = cv2.imread(self.left, cv2.IMREAD_GRAYSCALE)
+            self.right_img_pre = cv2.imread(self.right, cv2.IMREAD_GRAYSCALE)
         else:
+            '''load images if numpy data'''
             if not (type(self.left) == np.ndarray and type(self.right) == np.ndarray):
                 raise ValueError("image's type is not 'ndarray'")
-            self.left_img = self.left
-            self.right_img = self.right
+            self.left_img_pre = self.left
+            self.right_img_pre = self.right
 
-
-        if self.resize * min(self.left.shape) <= self.block_size:
+        if self.resize * min(self.left_img_pre.shape) <= self.block_size:
             raise ValueError("resize ratio is too small")
-        self.imgH, self.imgW = self.left_img.shape
-        '''image's height and width'''
+        else:
+            '''resize images'''
+            self.left_img = cv2.resize(self.left_img_pre, dsize=0, fx=self.resize, fy=self.resize)
+            self.right_img = cv2.resize(self.right_img_pre, dsize=0, fx=self.resize, fy=self.resize)
 
-        if self.max_disparity < 0 or self.max_disparity >= (self.imgW - 1):
+        self.img_shape_pre = self.left_img_pre.shape
+        self.img_shape = self.left_img.shape
+
+        if self.max_disparity < 0 or self.max_disparity >= (self.img_shape[1] - 1):
             raise ValueError("max disparity out of bound")
-        if self.shift < 0 or self.shift > (self.imgH / 2):
+        if self.shift < 0 or self.shift > (self.img_shape[0] / 2):
             raise ValueError("vertical shift out of bound or too big")
-        if self.block_size <= 0 or self.block_size >= min(self.imgW, self.imgH):
+        if self.block_size <= 0 or self.block_size >= min(self.img_shape):
             raise ValueError("block size out of bound")
+        if self.block_size % 2 == 0:
+            raise ValueError("block size should be an odd")
         if self.threshold < 0 or self.threshold > 255:
             raise ValueError("threshold out of bound")
-        if not (self.device == 'cpu' or self.device == 'gpu'):
+        if not (self.device == 'cpu' or self.device == 'cuda'):
             raise ValueError("device type error")
+        if self.device == 'cuda':
+            self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        else:
+            self.device = torch.device('cpu')
         if self.enable_save:
             if not os.path.exists(self.save_path):
                 raise ValueError("saving path is not valid")
-
-
-
-
-
+        if self.blur < 0 or (6 * self.blur + 1) >= min(self.img_shape):
+            raise ValueError("the value of blur is out of bound")
+        elif self.blur is not 0:
+            '''blur the images after resize'''
+            temp = Blur(self.left_img, kernel_size=odd(self.blur * 6 + 1), sigma=self.blur,
+                        device=self.device)
+            self.left_img = temp.output()
+            temp = Blur(self.right_img, kernel_size=odd(self.blur * 6 + 1), sigma=self.blur,
+                        device=self.device)
+            self.right_img = temp.output()
+            cv2.imwrite('./temp.jpg', self.right_img)
 
 def shell(path, param):
     """run a bash script and return the output
@@ -160,3 +179,13 @@ def shell(path, param):
 
     return output.stdout.strip().decode('utf-8')
 
+def odd(num):
+    """return the closest odd number
+
+    :param num: python number
+    :type num: int or float
+    :rtype: int
+    """
+    num = int(num)
+    num = num if num % 2 == 1 else num + 1
+    return num
