@@ -5,11 +5,11 @@ Note: Split Gaussian Kernel is used
 API version
 """
 
+import cv2
+import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import cv2
-import matplotlib.pyplot as plt
 
 
 class GaussianBlurNet(nn.Module):
@@ -32,8 +32,9 @@ class GaussianBlurNet(nn.Module):
 
     # 两次卷积实现分离高斯模糊
     def forward(self, img):
-        img = torch.from_numpy(img).to(device=self.device, dtype=torch.float)
-        img = img.unsqueeze(0).unsqueeze(0)
+        if not torch.is_tensor(img):
+            img = torch.from_numpy(img).to(device=self.device, dtype=torch.float)
+            img = img.unsqueeze(0).unsqueeze(0)
         img = F.conv2d(img, weight=self._vkernel, padding=(self._padding, 0))
         img = F.conv2d(img, weight=self._hkernel, padding=(0, self._padding))
         img = img.squeeze().to(device='cpu', dtype=torch.uint8).numpy()

@@ -23,12 +23,12 @@ TODO:
     various penalties
 """
 
-from gaussian_blur import GaussianBlur as Blur
+from submodule.funcs import *
+from submodule.blur import GaussianBlur as Blur
 import argparse
 import cv2
 import numpy as np
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
 import os
 
@@ -37,9 +37,9 @@ parser.add_argument('-l', '--left', default='/HDD/tjh/msl/left_nav_pair/525.jpg'
                     help="left image's path or numpy data")
 parser.add_argument('-r', '--right', default='/HDD/tjh/msl/right_nav_pair/525.jpg',
                     help="right image's path or numpy data")
-parser.add_argument('-d', '--max_disparity', default=200, type=int, help="max disparity")
+parser.add_argument('-d', '--max_disparity', default=100, type=int, help="max disparity")
 parser.add_argument('-s', '--shift', default=1, type=int, help="max vertical shift(one side)")
-parser.add_argument('-b', '--block_size', type=int, default=5, help='block size')
+parser.add_argument('-b', '--block_size', type=int, default=3, help='block size')
 parser.add_argument('-t', '--threshold', default=1, type=int,
                     help="[0-255], the lower, the weaker limit")
 parser.add_argument('-D', '--device', default='cpu', type=str, help="'cpu' or 'cuda'")
@@ -49,7 +49,7 @@ parser.add_argument('-S', '--enable_save', default=False, action='store_true',
                     help="save the output as image if specified")
 parser.add_argument('--save_path', default='./', type=str, help="path to save output image")
 parser.add_argument('-R', '--resize', default=1, type=int,
-                    help="resize the image as given ratio before processing")
+                    help="resize the image as given ratio before processing, range: (0, 1)")
 parser.add_argument('-B', '--blur', default=0, type=float,
                     help="blur the image pair before processing."
                          "Actually, the value is SIGMA in Gaussian Blur. The bigger, the fuzzier")
@@ -75,8 +75,8 @@ class MatchingSAD:
         :param enable_parallel: enable parallel computing, valid for cpu and gpu
         :param enable_save: saving the output as image file
         :param save_path: saving path
-        :param resize: resize the image as given ratio before processing, WARNING: all the other
-            parameters should be specified w.r.t the resized image
+        :param resize: resize the image as given ratio before processing, range: (0, 1),
+            WARNING: all the other parameters should be specified w.r.t the resized image
         :param blur: blur the image pair before processing.
             Actually, the value is SIGMA in Gaussian Blur. The bigger, the fuzzier
         :type left: str or numpy
@@ -105,6 +105,13 @@ class MatchingSAD:
         self.resize = resize
         self.blur = blur
 
+        if not (self.device == 'cpu' or self.device == 'cuda'):
+            raise ValueError("device type error")
+        if self.device == 'cuda':
+            self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        else:
+            self.device = torch.device('cpu')
+
         if type(self.left) == str:
             '''save the image's name and load the image if parameter left is a string(path)'''
             if not (os.path.exists(self.left) and os.path.exists(self.right)):
@@ -112,24 +119,29 @@ class MatchingSAD:
             self.name = shell('./get_name.sh', self.left)
             self.left_img_pre = cv2.imread(self.left, cv2.IMREAD_GRAYSCALE)
             self.right_img_pre = cv2.imread(self.right, cv2.IMREAD_GRAYSCALE)
+            self.left_img_pre = torch.from_numpy(self.left_img_pre).to(device=self.device, dtype=torch.float)
+            self.right_img_pre = torch.from_numpy(self.right_img_pre).to(device=self.device, dtype=torch.float)
         else:
             '''load images if numpy data'''
             if not (type(self.left) == np.ndarray and type(self.right) == np.ndarray):
                 raise ValueError("image's type is not 'ndarray'")
-            self.left_img_pre = self.left
-            self.right_img_pre = self.right
+            self.left_img_pre = torch.from_numpy(self.left).to(device=self.device, dtype=torch.float)
+            self.right_img_pre = torch.from_numpy(self.right).to(device=self.device, dtype=torch.float)
 
-        if self.resize * min(self.left_img_pre.shape) <= self.block_size:
-            raise ValueError("resize ratio is too small")
+        if (self.resize * min(self.left_img_pre.shape)) <= self.block_size or self.resize > 1:
+            raise ValueError("resize ratio is out of bound")
         else:
             '''resize images'''
-            self.left_img = cv2.resize(self.left_img_pre, dsize=0, fx=self.resize, fy=self.resize)
-            self.right_img = cv2.resize(self.right_img_pre, dsize=0, fx=self.resize, fy=self.resize)
+            stride = round(1 / self.resize)
+            weight = torch.tensor([[[[1.]]]])
+            self.left_img = F.conv2d(input=self.left_img_pre.unsqueeze(0).unsqueeze(0),
+                                     weight=weight, stride=stride)
+            self.right_img = F.conv2d(input=self.right_img_pre.unsqueeze(0).unsqueeze(0),
+                                      weight=weight, stride=stride)
 
-        self.img_shape_pre = self.left_img_pre.shape
-        self.img_shape = self.left_img.shape
+        self.img_shape = self.left_img.shape[2:]
 
-        if self.max_disparity < 0 or self.max_disparity >= (self.img_shape[1] - 1):
+        if (self.max_disparity < 0) or (self.max_disparity >= (self.img_shape[1] - 1)):
             raise ValueError("max disparity out of bound")
         if self.shift < 0 or self.shift > (self.img_shape[0] / 2):
             raise ValueError("vertical shift out of bound or too big")
@@ -139,12 +151,6 @@ class MatchingSAD:
             raise ValueError("block size should be an odd")
         if self.threshold < 0 or self.threshold > 255:
             raise ValueError("threshold out of bound")
-        if not (self.device == 'cpu' or self.device == 'cuda'):
-            raise ValueError("device type error")
-        if self.device == 'cuda':
-            self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        else:
-            self.device = torch.device('cpu')
         if self.enable_save:
             if not os.path.exists(self.save_path):
                 raise ValueError("saving path is not valid")
@@ -160,32 +166,3 @@ class MatchingSAD:
             self.right_img = temp.output()
             cv2.imwrite('./temp.jpg', self.right_img)
 
-def shell(path, param):
-    """run a bash script and return the output
-
-    :param path: script's path
-    :param param: script's parameter
-    :type path: str
-    :type param: str
-    :return: script's output
-    :rtype: str
-    """
-    import subprocess
-    import shlex
-
-    cmd = "sh -e %s %s" % (path, param)
-    cmd = shlex.split(cmd)
-    output = subprocess.run(cmd, capture_output=True)
-
-    return output.stdout.strip().decode('utf-8')
-
-def odd(num):
-    """return the closest odd number
-
-    :param num: python number
-    :type num: int or float
-    :rtype: int
-    """
-    num = int(num)
-    num = num if num % 2 == 1 else num + 1
-    return num
