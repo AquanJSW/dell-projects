@@ -35,13 +35,19 @@ def odd(num):
     return num
 
 
-class DownSampling(nn.Module):
-    def __init__(self, ratio):
-        super(DownSampling, self).__init__()
-        self.ratio = ratio
-        self.weight = torch.tensor([[[[1.]]]])
-        self.stride = round(1 / ratio)
-
-    def forward(self, x):
-        x = F.conv2d(x.to(dtype=torch.float).unsqueeze(0).unsqueeze(0), self.weight, stride=self.stride)
-        return x
+# class DownSampling(nn.Module):
+#     """down sampling"""
+#     def __init__(self, ratio):
+#         """
+#
+#         :param ratio: down sampling ratio
+#         :type ratio: float
+#         """
+#         super(DownSampling, self).__init__()
+#         self.ratio = ratio
+#         self.weight = torch.tensor([[[[1.]]]])
+#         self.stride = round(1 / ratio)
+#
+#     def forward(self, x):
+#         x = F.conv2d(x.to(dtype=torch.float).unsqueeze(0).unsqueeze(0), self.weight, stride=self.stride)
+#         return x

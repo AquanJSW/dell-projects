@@ -35,9 +35,12 @@ class GaussianBlurNet(nn.Module):
         if not torch.is_tensor(img):
             img = torch.from_numpy(img).to(device=self.device, dtype=torch.float)
             img = img.unsqueeze(0).unsqueeze(0)
-        img = F.conv2d(img, weight=self._vkernel, padding=(self._padding, 0))
-        img = F.conv2d(img, weight=self._hkernel, padding=(0, self._padding))
-        img = img.squeeze().to(device='cpu', dtype=torch.uint8).numpy()
+        temp = nn.ReflectionPad2d((0, 0, self._padding, self._padding))
+        img = F.conv2d(temp(img), weight=self._vkernel)
+        temp = nn.ReflectionPad2d((self._padding, self._padding, 0, 0))
+        img = F.conv2d(temp(img), weight=self._hkernel)
+        if not torch.is_tensor(img):
+            img = img.squeeze().to(device='cpu', dtype=torch.uint8).numpy()
         return img
 
 
