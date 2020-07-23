@@ -12,14 +12,18 @@ IDEA before coding:
         for better debug
 
 TODO:
-    MAX DISPARITY may has a linear variation, try to take this in consideration
-    using "edge detection" or "gaussian blur" to estimate MAX DISPARITY ??? then to fit the linear MAX DISPARITY line
+    1 MAX DISPARITY may has a linear variation, try to take this in consideration
+    2 using "edge detection" or "gaussian blur" to estimate MAX DISPARITY ??? then to fit the linear MAX DISPARITY line
         which is a parallel task(gpu accelerate)
-    adaptable block size(considering the texture complexity)
-    parameter VERTICAL SHIFT may be estimated through feature extraction??
-    various penalties
+    3 adaptable block size(considering the texture complexity)
+    4 parameter VERTICAL SHIFT may be estimated through feature extraction??
+    5 various penalties
+    6 just like PSMNet's idea, for parallel computing, first compute a number of (MAX_DISPARITY * (SHIFT*2+1))
+        cost maps(based on SAD), then for each pixel in left, log the minimal cost's (DISPARITY, SHIFT) coordination.
+        finally, generate a tensor shape of [1,1,H,W,2], the last dim's content is (DISPARITY, SHIFT)
 """
 
+import tqdm
 import subprocess
 import argparse
 import cv2
@@ -31,17 +35,19 @@ import os
 import shlex
 
 parser = argparse.ArgumentParser(description="SAD Matching for non-calibrated image pairs")
-parser.add_argument('-l', '--left', default='/HDD/tjh/msl/left_nav_pair/525.jpg',
+parser.add_argument('-l', '--left', default='/HDD/tjh/msl/left_nav_pair/10500.jpg',
                     help="left image's path or numpy data")
-parser.add_argument('-r', '--right', default='/HDD/tjh/msl/right_nav_pair/525.jpg',
+parser.add_argument('-r', '--right', default='/HDD/tjh/msl/right_nav_pair/10500.jpg',
                     help="right image's path or numpy data")
 parser.add_argument('-d', '--max_disparity', default=100, type=int, help="max disparity")
 parser.add_argument('-s', '--shift', default=1, type=int, help="max vertical shift(one side)")
 parser.add_argument('-b', '--block_size', type=int, default=3, help='block size')
 parser.add_argument('-t', '--threshold', default=1, type=int,
                     help="[0-255], the lower, the weaker limit")
+parser.add_argument('-p', '--penalty', default=2, type=float,
+                    help="the coefficient of cost at the situation of beyond threshold")
 parser.add_argument('-D', '--device', default='cpu', type=str, help="'cpu' or 'cuda'")
-parser.add_argument('-p', '--enable_parallel', default=False, type=bool,
+parser.add_argument('-P', '--enable_parallel', default=False, type=bool,
                     help="parallel compute, True or False")
 parser.add_argument('-S', '--enable_save', default=False, action='store_true',
                     help="save the output as image if specified")
@@ -59,8 +65,8 @@ print("WARNING: This file should running on linux, the output image's name shall
 class MatchingSAD:
     def __init__(self, left=parse.left, right=parse.right, max_disparity=parse.max_disparity,
                  shift=parse.shift, block_size=parse.block_size, threshold=parse.threshold,
-                 device=parse.device, enable_parallel=parse.enable_parallel, enable_save=parse.enable_save,
-                 save_path=parse.save_path, resize=parse.resize, blur=parse.blur):
+                 penalty=parse.penalty, device=parse.device, enable_parallel=parse.enable_parallel,
+                 enable_save=parse.enable_save, save_path=parse.save_path, resize=parse.resize, blur=parse.blur):
         """Binocular stereo matching using SAD
 
         :param left: left image's path or numpy data
@@ -69,6 +75,7 @@ class MatchingSAD:
         :param shift: max vertical pixel shift (one side)
         :param block_size: block size
         :param threshold: [0-255], the lower, the weaker limit
+        :param penalty: the coefficient of cost at the situation of beyond threshold
         :param device: 'cpu' or 'cuda'
         :param enable_parallel: enable parallel computing, valid for cpu and gpu
         :param enable_save: saving the output as image file
@@ -77,12 +84,14 @@ class MatchingSAD:
             WARNING: all the other parameters should be specified w.r.t the resized image
         :param blur: blur the image pair before processing.
             Actually, the value is SIGMA in Gaussian Blur. The bigger, the fuzzier
+
         :type left: str or numpy
         :type right: str or numpy
         :type max_disparity: int
         :type shift: int
         :type block_size: int
         :type threshold: int
+        :type penalty: float
         :type device: str
         :type enable_parallel: bool
         :type enable_save: bool
@@ -90,12 +99,14 @@ class MatchingSAD:
         :type resize: float
         :type blur: float
         """
+
         self.left = left
         self.right = right
         self.max_disparity = max_disparity
         self.shift = shift
         self.block_size = block_size
         self.threshold = threshold
+        self.penalty = penalty
         self.device = device
         self.enable_parallel = enable_parallel
         self.enable_save = enable_save
@@ -111,37 +122,49 @@ class MatchingSAD:
         else:
             self.device = torch.device('cpu')
 
+        # penalty judgement
+        if self.penalty <= 0:
+            raise ValueError("penalty should be a positive number")
+
         # image judgement
         if type(self.left) == str:
             '''save the image's name and load the image if parameter left is a string(path)'''
             if not (os.path.exists(self.left) and os.path.exists(self.right)):
                 raise ValueError("image's path is not valid")
             self.name = shell('./get_name.sh', self.left)
+
             self.left_img_pre = cv2.imread(self.left, cv2.IMREAD_GRAYSCALE)
             self.right_img_pre = cv2.imread(self.right, cv2.IMREAD_GRAYSCALE)
-            self.left_img_pre = torch.from_numpy(self.left_img_pre).to(device=self.device, dtype=torch.float)
-            self.right_img_pre = torch.from_numpy(self.right_img_pre).to(device=self.device, dtype=torch.float)
+
+            self.left_img_pre = torch.from_numpy(self.left_img_pre
+                                                 ).to(device=self.device, dtype=torch.float)
+            self.right_img_pre = torch.from_numpy(self.right_img_pre
+                                                  ).to(device=self.device, dtype=torch.float)
         else:
             '''load images if numpy data'''
             if not (type(self.left) == np.ndarray and type(self.right) == np.ndarray):
                 raise ValueError("image's type is not 'ndarray'")
-            self.left_img_pre = torch.from_numpy(self.left).to(device=self.device, dtype=torch.float)
-            self.right_img_pre = torch.from_numpy(self.right).to(device=self.device, dtype=torch.float)
+            self.left_img_pre = torch.from_numpy(self.left
+                                                 ).to(device=self.device, dtype=torch.float)
+            self.right_img_pre = torch.from_numpy(self.right
+                                                  ).to(device=self.device, dtype=torch.float)
 
         # resize judgement
-        if (self.resize * min(self.left_img_pre.shape)) <= self.block_size or self.resize > 1:
+        if (self.resize * min(self.left_img_pre.shape)) <= self.block_size \
+                or self.resize > 1:
             raise ValueError("resize ratio is out of bound")
         else:
             '''resize images'''
             stride = round(1 / self.resize)
-            weight = torch.tensor([[[[1.]]]])
+            weight = torch.tensor([[[[1.]]]], device=self.device)
+
             self.left_img = F.conv2d(input=self.left_img_pre.unsqueeze(0).unsqueeze(0),
                                      weight=weight, stride=stride)
             self.right_img = F.conv2d(input=self.right_img_pre.unsqueeze(0).unsqueeze(0),
                                       weight=weight, stride=stride)
 
         # image shape after resize before padding
-        self.img_shape = self.left_img.shape[2:]
+        self.img_shape = tuple(self.left_img.shape[2:])
 
         # max_disparity judgement
         if (self.max_disparity < 0) or (self.max_disparity >= (self.img_shape[1] - 1)):
@@ -158,6 +181,7 @@ class MatchingSAD:
             raise ValueError("block size should be an odd")
         else:
             '''reflect padding'''
+
             self.padding = block_size // 2
             temp = nn.ReflectionPad2d(self.padding)
             self.left_img = temp(self.left_img)
@@ -177,9 +201,11 @@ class MatchingSAD:
             raise ValueError("the value of blur is out of bound")
         elif self.blur is not 0:
             '''blur the images after resize'''
+
             temp = GaussianBlur(self.left_img, kernel_size=odd(self.blur * 6 + 1),
                                 sigma=self.blur, device=self.device)
             self.left_img = temp.output()
+
             temp = GaussianBlur(self.right_img, kernel_size=odd(self.blur * 6 + 1),
                                 sigma=self.blur, device=self.device)
             self.right_img = temp.output()
@@ -189,9 +215,57 @@ class MatchingSAD:
         self.left_img = temp(self.left_img)
         self.right_img = temp(self.right_img)
 
+        # start matching
+        if self.enable_parallel:
+            pass
+        else:
+            self.disparity = self._solo0()
+
+        if self.enable_save:
+            self.save()
+
+    def save(self):
+        try:
+            cv2.imwrite(self.save_path + self.name + '.jpg',
+                        self.disparity)
+        except IOError:
+            print("disparity wrote failed")
+        else:
+            print("disparity wrote success")
+
+    def _solo0(self):
+        """non-parallel matching, just using 'for' loops"""
+
+        disparity = list()
+        left_img = self.left_img.squeeze()
+        right_img = self.right_img.squeeze()
+        penalty = torch.tensor(self.penalty, device=self.device)
+        cost_max = torch.tensor(255 * (self.block_size ** 2), device=self.device)
+        cost_threshold = torch.tensor(self.threshold * (self.block_size ** 2), device=self.device)
+
+        for row in tqdm.tqdm(range(self.img_shape[0])):
+            for col in range(self.img_shape[1]):
+                pixels = search_pixels(left_px=(row, col), max_disparity=self.max_disparity,
+                                       shift=self.shift, img_shape=self.img_shape)
+                flag = torch.tensor(col)
+                cost = torch.tensor(cost_max)
+                for px in pixels:
+                    cost_ = (left_img[row, col] - right_img[px]).abs()
+                    if cost_ <= cost_threshold:
+                        cost_ *= penalty
+                    if cost_ < cost:
+                        cost = cost_
+                        flag = px[1]
+                disparity.append(col - flag)
+
+        disparity = torch.tensor(disparity, dtype=torch.uint8
+                                 ).reshape(self.img_shape[0], -1).numpy()
+        return disparity
+
 
 class Conv(nn.Module):
     """for pure-one convolution"""
+
     def __init__(self, block_size, device):
         super(Conv, self).__init__()
         self.block_size = block_size
@@ -211,11 +285,18 @@ class _GaussianBlurNet(nn.Module):
         """
 
         :param kernel: from cv2.getGaussianKernel
+        :param device: device
+        :type kernel: 1-dim list
+        :type device: torch.device
+
+        :return: blurred image
+        :rtype: same as input image(tensor[1,1,H,W] or numpy)
         """
         super(_GaussianBlurNet, self).__init__()
         self.train(False)
         self.kernel = kernel
         self.device = device
+
         # 两个一维卷积核
         # 可以不使用nn.Parameter，因为该方法将v/hkernel转化为可训练的参数，但这里根本不用训练
         vkernel = torch.from_numpy(self.kernel).to(device=self.device, dtype=torch.float)
@@ -229,21 +310,34 @@ class _GaussianBlurNet(nn.Module):
         if not torch.is_tensor(img):
             img = torch.from_numpy(img).to(device=self.device, dtype=torch.float)
             img = img.unsqueeze(0).unsqueeze(0)
+
         temp = nn.ReflectionPad2d((0, 0, self._padding, self._padding))
         img = F.conv2d(temp(img), weight=self._vkernel)
         temp = nn.ReflectionPad2d((self._padding, self._padding, 0, 0))
         img = F.conv2d(temp(img), weight=self._hkernel)
+
         if not torch.is_tensor(img):
             img = img.squeeze().to(device='cpu', dtype=torch.uint8).numpy()
+
         return img
 
 
 class GaussianBlur:
-    """image blur using spilt gaussian kernel"""
     def __init__(self, img, kernel_size, sigma, device=torch.device('cpu')):
-        # 核心非奇数返回Error
-        if not (kernel_size % 2):
-            raise ValueError("kernel size must be and odd")
+        """image blur using spilt gaussian kernel
+
+        :param img: input image
+        :param kernel_size: gaussian kernel size
+        :param sigma: gaussian blur's sigma
+        :param device: compute device
+
+        :type
+        """
+
+        # un-annotation the following lines if their is no odd kernel pre-check
+        # # 核心非奇数返回Error
+        # if not (kernel_size % 2):
+        #     raise ValueError("kernel size must be and odd")
         self.kernel_size = kernel_size
         self.sigma = sigma
         self.img = img
@@ -252,11 +346,6 @@ class GaussianBlur:
         self.out = net(self.img)
 
     def output(self):
-        """
-
-        :return: blurred image
-        :rtype: same as input image(numpy or tensor[1,1,H,W])
-        """
         return self.out
 
 
@@ -274,7 +363,6 @@ def shell(path, param):
     cmd = "sh -e %s %s" % (path, param)
     cmd = shlex.split(cmd)
     output = subprocess.run(cmd, capture_output=True)
-
     return output.stdout.strip().decode('utf-8')
 
 
@@ -285,10 +373,51 @@ def odd(num):
     :type num: int or float
     :rtype: int
     """
+
     num = int(num)
     num = num if num % 2 == 1 else num + 1
     return num
 
 
+def search_pixels(left_px, max_disparity, shift, img_shape):
+    """定位匹配范围的左上角和右下角坐标
+
+    :param left_px: left image's pixel waiting for match
+    :param max_disparity: max_disparity
+    :param shift: vertical shift
+    :param img_shape: image's shape
+    :type left_px: tuple or list
+    :type max_disparity: int
+    :type shift: int
+    :type img_shape: list or tuple
+
+    :return: a list of potential pixels in right image
+    :rtype: list of tuples
+    """
+
+    # get computational left-top and right-bottom corner first
+    left_top_corner = [left_px[0] - shift,
+                       left_px[1] - max_disparity]
+    right_bottom_corner = [left_px[0] + shift,
+                           left_px[1]]
+
+    # then judge their validation
+    if left_top_corner[0] < 0:
+        left_top_corner[0] = 0
+    if left_top_corner[1] < 0:
+        left_top_corner[1] = 0
+    if right_bottom_corner[0] >= img_shape[0]:
+        right_bottom_corner[0] = img_shape[0] - 1
+
+    # push pixel
+    pixels = []
+    for row in range(left_top_corner[0], right_bottom_corner[0] + 1):
+        for col in range(left_top_corner[1], right_bottom_corner[1] + 1):
+            pixels.append((row, col))
+    return pixels
+
+
 if __name__ == '__main__':
-    MatchingSAD()
+    MatchingSAD(enable_save=True, resize=0.50, blur=0, max_disparity=100, shift=0, block_size=3,
+                left='/HDD/tjh/SceneFlow/sampler/Driving/RGB_cleanpass/left/0400.png',
+                right='/HDD/tjh/SceneFlow/sampler/Driving/RGB_cleanpass/right/0400.png')
