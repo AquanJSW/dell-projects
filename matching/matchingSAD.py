@@ -334,19 +334,19 @@ class MatchingSAD:
                 temp = mp.Process(target=job, args=(q, left_row_pixels, row))
                 temp.start()
 
-        # extract (idx, row) pairs from 'q' into a list
-        idx_row = list()
-        for i in range(self.img_shape[0]):
-            idx_row.append(q.get())
+            # extract (idx, row) pairs from 'q' into a list
+            idx_row = list()
+            for i in range(self.img_shape[0]):
+                idx_row.append(q.get())
 
-        idx_row = dict(sorted(idx_row, key=lambda pair: pair[0]))
-        disparity_ = list(idx_row.values())
-        disparity = list()
-        for row in disparity_:
-            disparity += row
-        disparity = torch.tensor(disparity, dtype=torch.uint8
-                                 ).reshape(self.img_shape[0], -1).numpy()
-        return disparity
+            idx_row = dict(sorted(idx_row, key=lambda pair: pair[0]))
+            disparity_ = list(idx_row.values())
+            disparity = list()
+            for row in disparity_:
+                disparity += row
+            disparity = torch.tensor(disparity, dtype=torch.uint8
+                                     ).reshape(self.img_shape[0], -1).numpy()
+            return disparity
 
     def _solo0(self):
         """non-parallel matching, just using 'for' loops"""
