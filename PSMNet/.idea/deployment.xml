@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="tjh@10.170.5.194:2402 password" autoUploadExternalChanges="true">
+  <component name="PublishConfigData" autoUpload="Always" autoUploadExternalChanges="true">
     <serverData>
-      <paths name="tjh@10.170.5.194:2402 password">
+      <paths name="tjh@vipsl422.tk:2405">
         <serverdata>
           <mappings>
-            <mapping deploy="/home/tjh/projects/PSMNet" local="$PROJECT_DIR$" />
+            <mapping deploy="/home/tjh/projects/PSMNet" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

@@ -61,13 +61,14 @@ print('Number of model parameters: {}'.format(sum([p.data.nelement() for p in mo
 
 def test(imgL, imgR):
     model.eval()
+    model.training = False
 
     if args.cuda:
        imgL = imgL.cuda()
        imgR = imgR.cuda()
 
     with torch.no_grad():
-        disp = model(imgL,imgR)
+        disp = model(imgL, imgR)
 
     disp = torch.squeeze(disp)
     pred_disp = disp.data.cpu().numpy()
@@ -90,26 +91,28 @@ def main():
 
     # pad to width and height to 16 times
     if imgL.shape[1] % 16 != 0:
-        times = imgL.shape[1]//16
-        top_pad = (times+1)*16 -imgL.shape[1]
+        times = imgL.shape[1] // 16
+        top_pad = (times + 1) * 16 - imgL.shape[1]
     else:
         top_pad = 0
 
     if imgL.shape[2] % 16 != 0:
-        times = imgL.shape[2]//16
-        right_pad = (times+1)*16-imgL.shape[2]
+        times = imgL.shape[2] // 16
+        right_pad = (times + 1) * 16 - imgL.shape[2]
     else:
         right_pad = 0
 
-    imgL = F.pad(imgL, (0, right_pad, top_pad, 0)).unsqueeze(0)
-    imgR = F.pad(imgR, (0, right_pad, top_pad, 0)).unsqueeze(0)
+    imgL = F.pad(imgL, [0, right_pad, top_pad, 0]).unsqueeze(0)
+    imgR = F.pad(imgR, [0, right_pad, top_pad, 0]).unsqueeze(0)
 
     start_time = time.time()
-    pred_disp = test(imgL,imgR)
+    pred_disp = test(imgL, imgR)
     print('time = %.2f' % (time.time() - start_time))
 
-    if top_pad !=0 or right_pad != 0:
-        img = pred_disp[top_pad:,:-right_pad]
+    if top_pad != 0 and right_pad == 0:
+        img = pred_disp[top_pad:, :]
+    elif top_pad == 0 and right_pad != 0:
+        img = pred_disp[:, :-right_pad]
     else:
         img = pred_disp
 

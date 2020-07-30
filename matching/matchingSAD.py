@@ -48,8 +48,6 @@ parser.add_argument('-t', '--threshold', default=1, type=int,
 parser.add_argument('-p', '--penalty', default=2, type=float,
                     help="the coefficient of cost at the situation of beyond threshold")
 parser.add_argument('-D', '--device', default='cpu', type=str, help="'cpu' or 'cuda'")
-parser.add_argument('-P', '--enable_parallel', default=False, type=bool,
-                    help="parallel compute, True or False")
 parser.add_argument('-S', '--enable_save', default=False, action='store_true',
                     help="save the output as image if specified")
 parser.add_argument('--save_path', default='./', type=str, help="path to save output image")
@@ -66,8 +64,8 @@ print("WARNING: This file should running on linux, the output image's name shall
 class MatchingSAD:
     def __init__(self, left=parse.left, right=parse.right, max_disparity=parse.max_disparity,
                  shift=parse.shift, block_size=parse.block_size, threshold=parse.threshold,
-                 penalty=parse.penalty, device=parse.device, enable_parallel=parse.enable_parallel,
-                 enable_save=parse.enable_save, save_path=parse.save_path, resize=parse.resize, blur=parse.blur):
+                 penalty=parse.penalty, device=parse.device, enable_save=parse.enable_save,
+                 save_path=parse.save_path, resize=parse.resize, blur=parse.blur):
         """Binocular stereo matching using SAD
 
         :param left: left image's path or numpy data
@@ -78,7 +76,6 @@ class MatchingSAD:
         :param threshold: [0-255], the lower, the weaker limit
         :param penalty: the coefficient of cost at the situation of beyond threshold
         :param device: 'cpu' or 'cuda'
-        :param enable_parallel: enable parallel computing, valid for cpu and gpu
         :param enable_save: saving the output as image file
         :param save_path: saving path
         :param resize: resize the image as given ratio before processing, range: (0, 1),
@@ -94,8 +91,6 @@ class MatchingSAD:
         :type threshold: int
         :type penalty: float
         :type device: str
-        :type enable_parallel: bool
-        :type enable_save: bool
         :type save_path: str
         :type resize: float
         :type blur: float
@@ -109,7 +104,6 @@ class MatchingSAD:
         self.threshold = threshold
         self.penalty = penalty
         self.device = device
-        self.enable_parallel = enable_parallel
         self.enable_save = enable_save
         self.save_path = save_path
         self.resize = resize
@@ -218,16 +212,21 @@ class MatchingSAD:
                                 sigma=self.blur, device=self.device)
             self.right_img = temp.output()
 
+        # edge
+        self.left_img = self.left_img.to(device='cpu', dtype=torch.uint8).squeeze().numpy()
+        self.right_img = self.right_img.to(device='cpu', dtype=torch.uint8).squeeze().numpy()
+        self.left_img = cv2.Canny(self.left_img, 50, 150)
+        self.right_img = cv2.Canny(self.right_img, 100, 150)
+        self.left_img = torch.from_numpy(self.left_img).to(device=device, dtype=torch.float).unsqueeze(0).unsqueeze(0)
+        self.right_img = torch.from_numpy(self.right_img).to(device=device, dtype=torch.float).unsqueeze(0).unsqueeze(0)
+
         # pure-one convolution
         temp = Conv(self.block_size, self.device)
         self.left_img = temp(self.left_img)
         self.right_img = temp(self.right_img)
 
         # start matching
-        if self.enable_parallel:
-            self.disparity = self._parallel1()
-        else:
-            self.disparity = self._solo0()
+        self.disparity = self._parallel_cpu()
 
         if self.enable_save:
             self.save()
@@ -241,51 +240,8 @@ class MatchingSAD:
         else:
             print("disparity wrote success")
 
-    def _parallel0(self):
-        """parallel version of solo1
-        threads: total pixel numbers
-        not work for cuda
+    def _parallel_cpu(self):
         """
-
-        dict_disparity = dict()
-        left_img = self.left_img.squeeze()
-        right_img = self.right_img.squeeze()
-        penalty = torch.tensor(self.penalty, device=self.device)
-        cost_max = torch.tensor(256 * (self.block_size ** 2), device=self.device)
-        cost_threshold = torch.tensor(self.threshold * (self.block_size ** 2), device=self.device)
-
-        def job(left_px, idx):
-            pixels = search_pixels(left_px=left_px, max_disparity=self.max_disparity,
-                                   shift=self.shift, img_shape=self.img_shape)
-            flag = torch.tensor(left_px[1])
-            cost = cost_max.clone().detach()
-            for px in pixels:
-                cost_ = (left_img[left_px] - right_img[px]).abs()
-                if cost_ <= cost_threshold:
-                    cost_ *= penalty
-                if cost_ < cost:
-                    cost = cost_
-                    flag = px[1]
-            dict_disparity[idx] = left_px[1] - flag
-
-        for p in range(self.img_shape[0] * self.img_shape[1]):
-            if self.device == torch.device('cuda'):
-                mp.set_start_method('spawn')
-            row = p // self.img_shape[1]
-            col = p % self.img_shape[1]
-            temp = mp.Process(target=job, args=((row, col), p))
-            temp.start()
-
-        dict_disparity = dict(sorted(dict_disparity.items(),
-                                     key=lambda item: item[0])
-                              )
-        disparity = list(dict_disparity.values())
-        disparity = torch.tensor(disparity, dtype=torch.uint8
-                                 ).reshape(self.img_shape[0], -1).numpy()
-        return disparity
-
-    def _parallel1(self):
-        """parallel version of solo0
         threads: same number of image's height
         works well on cpu, but not on gpu
         """
@@ -324,55 +280,25 @@ class MatchingSAD:
             q.put((idx, row_disparity))
 
         # start multiprocessing for left image's rows
-        if __name__ == '__main__':
-            if self.device == torch.device('cuda'):
-                mp.set_start_method('spawn')
-            q = mp.Queue()
-            for row in range(self.img_shape[0]):
-                left_row_pixels = self.img_pixels[row * self.img_shape[1]:
-                                                  (row + 1) * self.img_shape[1] - 1]
-                temp = mp.Process(target=job, args=(q, left_row_pixels, row))
-                temp.start()
+        if self.device == torch.device('cuda'):
+            mp.set_start_method('spawn')
+        q = mp.Queue()
+        for row in range(self.img_shape[0]):
+            left_row_pixels = self.img_pixels[row * self.img_shape[1]:
+                                              (row + 1) * self.img_shape[1] - 1]
+            temp = mp.Process(target=job, args=(q, left_row_pixels, row))
+            temp.start()
 
-            # extract (idx, row) pairs from 'q' into a list
-            idx_row = list()
-            for i in range(self.img_shape[0]):
-                idx_row.append(q.get())
+        # extract (idx, row) pairs from 'q' into a list
+        idx_row = list()
+        for i in range(self.img_shape[0]):
+            idx_row.append(q.get())
 
-            idx_row = dict(sorted(idx_row, key=lambda pair: pair[0]))
-            disparity_ = list(idx_row.values())
-            disparity = list()
-            for row in disparity_:
-                disparity += row
-            disparity = torch.tensor(disparity, dtype=torch.uint8
-                                     ).reshape(self.img_shape[0], -1).numpy()
-            return disparity
-
-    def _solo0(self):
-        """non-parallel matching, just using 'for' loops"""
-
+        idx_row = dict(sorted(idx_row, key=lambda pair: pair[0]))
+        disparity_ = list(idx_row.values())
         disparity = list()
-        left_img = self.left_img.squeeze()
-        right_img = self.right_img.squeeze()
-        penalty = torch.tensor(self.penalty, device=self.device)
-        cost_max = torch.tensor(255 * (self.block_size ** 2), device=self.device)
-        cost_threshold = torch.tensor(self.threshold * (self.block_size ** 2), device=self.device)
-
-        for row in tqdm.tqdm(range(self.img_shape[0])):
-            for col in range(self.img_shape[1]):
-                pixels = search_pixels(left_px=(row, col), max_disparity=self.max_disparity,
-                                       shift=self.shift, img_shape=self.img_shape)
-                flag = torch.tensor(col)
-                cost = cost_max.clone().detach()
-                for px in pixels:
-                    cost_ = (left_img[row, col] - right_img[px]).abs()
-                    if cost_ <= cost_threshold:
-                        cost_ *= penalty
-                    if cost_ < cost:
-                        cost = cost_
-                        flag = px[1]
-                disparity.append(col - flag)
-
+        for row in disparity_:
+            disparity += row
         disparity = torch.tensor(disparity, dtype=torch.uint8
                                  ).reshape(self.img_shape[0], -1).numpy()
         return disparity
@@ -533,7 +459,6 @@ def search_pixels(left_px, max_disparity, shift, img_shape):
 
 
 if __name__ == '__main__':
-    MatchingSAD(enable_save=True, resize=0.50, blur=0, max_disparity=100, shift=0, block_size=3,
-                left='/HDD/tjh/SceneFlow/sampler/Driving/RGB_cleanpass/left/0400.png',
-                right='/HDD/tjh/SceneFlow/sampler/Driving/RGB_cleanpass/right/0400.png',
-                enable_parallel=True, device='cpu')
+    MatchingSAD(enable_save=True, resize=0.25, blur=1.5, max_disparity=75, shift=0, block_size=3,
+                left='/HDD/tjh/msl/left_nav_pair/84.jpg',
+                right='/HDD/tjh/msl/right_nav_pair/84.jpg', device='cpu')
